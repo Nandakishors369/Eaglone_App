@@ -1,0 +1,1 @@
+final user = FirebaseAuth.instance.currentUser;
