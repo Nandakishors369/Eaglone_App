@@ -2,16 +2,18 @@ import 'dart:developer';
 //import 'dart:html';
 
 import 'dart:ui';
+import 'package:eaglone/model/Product%20Model/freecourse_model.dart';
+import 'package:eaglone/services/free_courses.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animations/animations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eaglone/Mongo%20Db/mongodb.dart';
 import 'package:eaglone/model/free_courses.dart';
-import 'package:eaglone/services/firebase_auth_methods.dart';
+
 import 'package:eaglone/services/getdata.dart';
 import 'package:eaglone/services/news_services.dart';
 import 'package:eaglone/services/user_authenticaton.dart';
-import 'package:eaglone/services/youtube_services.dart';
+
 import 'package:eaglone/view/Domain%20Screen/domain_screen.dart';
 import 'package:eaglone/view/Domain%20Search/Dsearch_screen.dart';
 import 'package:eaglone/view/Home%20Screen/premium_screen.dart';
@@ -37,22 +39,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    //getDocuments();
-    postSignup();
-    //getsample();
-    hello();
-  }
-
-  void hello() async {
-    log("working");
-    // await getsample();
-    log("done");
-  }
-
+  FreeCourses freeCourses = FreeCourses();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,65 +52,106 @@ class _HomeScreenState extends State<HomeScreen> {
           panel: Container(
             decoration: BoxDecoration(
                 color: kwhite, borderRadius: BorderRadius.circular(20.r)),
-            child: Column(
-              children: [
-                kheight10,
-                DragIndicator(),
-                kheigh20,
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      stacks(context, name: 'Flutter', color: kblue),
-                      stacks(context, name: "MERN", color: kyellow)
-                    ],
-                  ),
-                ),
-                kheigh20,
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      stacks(context, name: "Golang", color: kdgrey),
-                      stacks(context, name: "Python", color: kdblue)
-                    ],
-                  ),
-                ),
-                kheigh20,
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DSearchScreen(),
-                        ));
-                  },
-                  child: Container(
-                    height: 60.h,
-                    width: 340.w,
-                    decoration: BoxDecoration(
-                        color: themeGreen,
-                        borderRadius: BorderRadius.circular(15.r)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(
-                        child: Text(
-                          "Explore All Courses",
-                          style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
-                              color: kwhite,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 25.sp,
-                            ),
-                          ),
+            child: FutureBuilder(
+              future: freeCourses.getProducts(),
+              builder: (context, snapshot) {
+                FreeProductModel data = snapshot.data!;
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: Text(
+                      "Getting your courses..!",
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                          color: kblack,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 35.sp,
                         ),
                       ),
                     ),
-                  ),
-                )
-              ],
+                  );
+                } else if (snapshot.hasData) {
+                  return Column(
+                    children: [
+                      kheight10,
+                      DragIndicator(),
+                      kheigh20,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            stacks(context,
+                                name: data.data[0].title,
+                                color: kblue,
+                                data: data,
+                                index: 0),
+                            stacks(context,
+                                name: data.data[1].title,
+                                color: kyellow,
+                                data: data,
+                                index: 1)
+                          ],
+                        ),
+                      ),
+                      kheigh20,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            stacks(context,
+                                name: data.data[2].title,
+                                color: kdgrey,
+                                data: data,
+                                index: 2),
+                            stacks(context,
+                                name: data.data[3].title,
+                                color: kdblue,
+                                data: data,
+                                index: 3)
+                          ],
+                        ),
+                      ),
+                      kheigh20,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DSearchScreen(),
+                              ));
+                        },
+                        child: Container(
+                          height: 60.h,
+                          width: 340.w,
+                          decoration: BoxDecoration(
+                              color: themeGreen,
+                              borderRadius: BorderRadius.circular(15.r)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(
+                              child: Text(
+                                "Explore All Courses",
+                                style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                    color: kwhite,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 25.sp,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  );
+                } else {
+                  return SnackBar(
+                      duration: const Duration(seconds: 7),
+                      content: Text("Something Went Wrong"));
+                }
+              },
             ),
           ),
           body: HomeBody(),
@@ -179,10 +207,12 @@ class _HomeBodyState extends State<HomeBody> {
               ),
               GestureDetector(
                 onTap: () async {
-                  SharedPreferences prefs =
+                  FreeCourses freeCourses = FreeCourses();
+                  await freeCourses.getProducts();
+                  /*   SharedPreferences prefs =
                       await SharedPreferences.getInstance();
                   prefs.getString("token");
-                  log(prefs.getString("token").toString());
+                  log(prefs.getString("token").toString()); */
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -254,7 +284,7 @@ class _HomeBodyState extends State<HomeBody> {
             kwidth10,
             GestureDetector(
                 onTap: () {
-                  postSignup();
+                  // postSignup();
                 },
                 child: nothingButton("Course \nHistory")),
             nothingButton("Your \nCourses"),
@@ -303,13 +333,19 @@ class _HomeBodyState extends State<HomeBody> {
 }
 
 GestureDetector stacks(BuildContext context,
-    {required String name, required Color color}) {
+    {required String name,
+    required Color color,
+    required FreeProductModel data,
+    required int index}) {
   return GestureDetector(
     onTap: () {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DomainScreen(),
+            builder: (context) => DomainScreen(
+              data: data,
+              index: index,
+            ),
           ));
     },
     child: OpenContainer(
@@ -344,7 +380,10 @@ GestureDetector stacks(BuildContext context,
       ),
       closedColor: Colors.white,
       openBuilder: (_, closeContainer) {
-        return DomainScreen(); /* Scaffold(
+        return DomainScreen(
+          data: data,
+          index: index,
+        ); /* Scaffold(
               appBar: AppBar(
                 backgroundColor: Colors.blue,
                 title: Text('Go back'),

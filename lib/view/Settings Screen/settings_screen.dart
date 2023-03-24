@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:eaglone/model/Authentication%20Model/signup_model.dart';
-import 'package:eaglone/services/firebase_auth_methods.dart';
 import 'package:eaglone/services/user_authenticaton.dart';
 import 'package:eaglone/view/Login%20and%20Signup/google_login.dart';
 import 'package:eaglone/view/Login%20and%20Signup/login_screen.dart';

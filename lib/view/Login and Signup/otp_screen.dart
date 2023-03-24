@@ -1,17 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:developer';
-
 import 'package:eaglone/services/user_authenticaton.dart';
-import 'package:eaglone/view/Login%20and%20Signup/loginuser.dart';
 import 'package:eaglone/view/Navigation/navigation_bar.dart';
 import 'package:eaglone/view/const.dart';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:otp_text_field/otp_text_field.dart';
@@ -19,12 +12,10 @@ import 'package:otp_text_field/style.dart';
 
 class OtpScreen extends StatelessWidget {
   String email;
-  //VoidCallback onPressed;
-  //var otp;
+
   OtpScreen({
     super.key,
     required this.email,
-    //required this.onPressed,
   });
   final UserAuth userAuth = UserAuth();
   OtpFieldController otpController = OtpFieldController();
@@ -83,14 +74,15 @@ class OtpScreen extends StatelessWidget {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: Text("Verification Failed"),
-                        content: Text("Verification failed please try again"),
+                        title: const Text("Verification Failed"),
+                        content:
+                            const Text("Verification failed please try again"),
                         actions: [
                           TextButton(
                               onPressed: () {
                                 Navigator.pop(context);
                               },
-                              child: Text("Ok"))
+                              child: const Text("Ok"))
                         ],
                       );
                     },
