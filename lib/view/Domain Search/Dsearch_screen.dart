@@ -1,3 +1,4 @@
+import 'package:eaglone/services/free_courses.dart';
 import 'package:eaglone/view/const.dart';
 import 'package:eaglone/view/widgets/common_widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,6 +16,7 @@ class DSearchScreen extends StatefulWidget {
 }
 
 class _DSearchScreenState extends State<DSearchScreen> {
+  FreeCourses freeCourses = FreeCourses();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,28 +25,45 @@ class _DSearchScreenState extends State<DSearchScreen> {
         child: Column(
           children: [
             kheigh20,
-            appHeadings(content: "Search Your Question"),
+            appHeadings(content: "Your Free Courses"),
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: CupertinoSearchTextField(),
             ),
             kheight10,
-            ListView.separated(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    leading: CircleAvatar(),
-                    title: Text("content"),
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Divider(),
-                  );
-                },
-                itemCount: 15)
+            FutureBuilder(
+                future: freeCourses.getProducts(),
+                builder: (context, snapshot) {
+                  var data = snapshot.data!;
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CupertinoActivityIndicator();
+                  } else if (snapshot.hasData) {
+                    return ListView.separated(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            leading: CircleAvatar(
+                              backgroundColor: kwhite,
+                              backgroundImage:
+                                  NetworkImage(data.data[index].image),
+                            ),
+                            title: Text(data.data[index].title),
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Divider(),
+                          );
+                        },
+                        itemCount: data.data.length);
+                  } else {
+                    return Center(
+                      child: Text("Something Went Wrong"),
+                    );
+                  }
+                })
           ],
         ),
       )),

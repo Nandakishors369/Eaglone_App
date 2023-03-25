@@ -16,10 +16,13 @@ var themeGreen = Color(0xFF3BECB8);
 //heights
 var kheigh20 = SizedBox(height: 20.h);
 var kheight10 = SizedBox(height: 10.h);
+var kheight40 = SizedBox(height: 40.h);
 // widths
+var kwidth5 = SizedBox(width: 5.w);
 var kwidth10 = SizedBox(width: 10.w);
 var kwidth15 = SizedBox(width: 15.w);
 var kwidth20 = SizedBox(width: 20.w);
+
 //others
 String sampleText =
     "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from de Finibus Bonorum et Malorum by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.";
@@ -29,4 +32,4 @@ const MONGO_URL =
     "mongodb+srv://eaglone:eaglone@cluster0.tu1jvdt.mongodb.net/test";
 const COLLECTION = "products";
 
-Size size = Size(423.5, 941.2);
+Size size = const Size(423.5, 941.1);
