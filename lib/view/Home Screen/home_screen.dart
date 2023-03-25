@@ -13,7 +13,7 @@ import 'package:eaglone/model/free_courses.dart';
 import 'package:eaglone/services/getdata.dart';
 import 'package:eaglone/services/news_services.dart';
 import 'package:eaglone/services/user_authenticaton.dart';
-
+import 'package:lottie/lottie.dart';
 import 'package:eaglone/view/Domain%20Screen/domain_screen.dart';
 import 'package:eaglone/view/Domain%20Search/Dsearch_screen.dart';
 import 'package:eaglone/view/Home%20Screen/premium_screen.dart';
@@ -55,21 +55,23 @@ class _HomeScreenState extends State<HomeScreen> {
             child: FutureBuilder(
               future: freeCourses.getProducts(),
               builder: (context, snapshot) {
-                FreeProductModel data = snapshot.data!;
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
-                    child: Text(
+                      child: Lottie.asset("assets/vTSLp13quf.json", height: 200)
+
+                      /* Text(
                       "Getting your courses..!",
                       style: GoogleFonts.poppins(
                         textStyle: TextStyle(
                           color: kblack,
                           fontWeight: FontWeight.w500,
-                          fontSize: 35.sp,
+                          fontSize: 30.sp,
                         ),
                       ),
-                    ),
-                  );
-                } else if (snapshot.hasData) {
+                    ), */
+                      );
+                } else if (snapshot.hasData && snapshot.data != null) {
+                  FreeProductModel data = snapshot.data!;
                   return Column(
                     children: [
                       kheight10,

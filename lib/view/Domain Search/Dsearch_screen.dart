@@ -34,10 +34,10 @@ class _DSearchScreenState extends State<DSearchScreen> {
             FutureBuilder(
                 future: freeCourses.getProducts(),
                 builder: (context, snapshot) {
-                  var data = snapshot.data!;
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CupertinoActivityIndicator();
-                  } else if (snapshot.hasData) {
+                    return Lottie.asset("assets/not_found.json");
+                  } else if (snapshot.hasData && snapshot.data != null) {
+                    var data = snapshot.data!;
                     return ListView.separated(
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,

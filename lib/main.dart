@@ -2,6 +2,7 @@
 
 import 'package:eaglone/Mongo%20Db/mongodb.dart';
 import 'package:eaglone/firebase_options.dart';
+import 'package:eaglone/services/free_courses.dart';
 import 'package:eaglone/view/Login%20and%20Signup/google_login.dart';
 import 'package:eaglone/view/Navigation/navigation_bar.dart';
 import 'package:eaglone/view/Splash%20Screens/splash_screen.dart';
@@ -21,6 +22,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
