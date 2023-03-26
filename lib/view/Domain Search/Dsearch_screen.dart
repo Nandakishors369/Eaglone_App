@@ -21,17 +21,17 @@ class _DSearchScreenState extends State<DSearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: SingleChildScrollView(
-        child: Column(
-          children: [
-            kheigh20,
-            appHeadings(content: "Your Free Courses"),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: CupertinoSearchTextField(),
-            ),
-            kheight10,
-            FutureBuilder(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              kheigh20,
+              appHeadings(content: "Your Free Courses"),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: CupertinoSearchTextField(),
+              ),
+              kheight10,
+              FutureBuilder(
                 future: freeCourses.getProducts(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -63,10 +63,12 @@ class _DSearchScreenState extends State<DSearchScreen> {
                       child: Text("Something Went Wrong"),
                     );
                   }
-                })
-          ],
+                },
+              )
+            ],
+          ),
         ),
-      )),
+      ),
     );
   }
 }

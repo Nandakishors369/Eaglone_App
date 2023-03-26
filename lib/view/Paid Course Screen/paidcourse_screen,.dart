@@ -3,8 +3,10 @@ import 'dart:developer';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eaglone/Mongo%20Db/mongodb.dart';
+import 'package:eaglone/model/Product%20Model/paidcourse_model.dart';
 import 'package:eaglone/model/mongo_model.dart';
 import 'package:eaglone/model/product_model.dart';
+import 'package:eaglone/services/paid_courses.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/const.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/produc_screen.dart';
 import 'package:eaglone/view/const.dart';
@@ -26,6 +28,7 @@ class PaidCourseScreen extends StatefulWidget {
 }
 
 class _PaidCourseScreenState extends State<PaidCourseScreen> {
+  PaidCourses paid = PaidCourses();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,21 +74,34 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
                   Container(
                     height: 198.h,
                     width: 400.w,
-                    child: Card(
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        "assets/jSWwKABiFik-HD.jpg",
+                        fit: BoxFit.cover,
+                      ),
+                    ), /* Card(
                       elevation: 5,
+                      child: Image.asset(
+                        "assets/jSWwKABiFik-HD.jpg",
+                      ),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.r)),
-                      color: Color.fromARGB(255, 40, 40, 40),
-                    ),
+                    ), */
                   ),
                   Container(
                     height: 198.h,
                     width: 400.w,
-                    child: Card(
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.r)),
-                      color: kblue,
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        "assets/M3ni_jDqY6E-HD.jpg",
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   )
                 ],
@@ -100,80 +116,97 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
                   viewportFraction: 0.8,
                 ),
               ),
-              /* Container(
-                height: 198.h,
-                width: 400.w,
-                child: Card(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  color: Color.fromARGB(255, 40, 40, 40),
-                ),
-              ), */
               kheigh20,
               Row(
                 children: [kwidth20, appHeadings(content: "Featured Courses")],
               ),
               kheigh20,
               kheight10,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ProductScreen(),
-                              ));
-                        },
-                        child: featuredCourses()),
-                    featuredCourses()
-                  ],
-                ),
-              ),
-              kheigh20,
-              kheigh20,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [featuredCourses(), featuredCourses()],
-                ),
-              ),
-              kheigh20,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    //kwidth20,
-                    appHeadings(content: "All Courses"),
-                    IconButton(
-                        onPressed: () {}, icon: Icon(Iconsax.arrow_right_14))
-                  ],
-                ),
-              ),
-              kheigh20,
-              kheight10,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [featuredCourses(), featuredCourses()],
-                ),
-              ),
-              kheigh20,
-              kheigh20,
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [featuredCourses(), featuredCourses()],
-                ),
-              ),
+              FutureBuilder(
+                  future: paid.getCourses(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return appHeadings(content: "Fetching you coureses");
+                    } else if (snapshot.hasData && snapshot.data != null) {
+                      var data = snapshot.data!;
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProductScreen(),
+                                          ));
+                                    },
+                                    child: featuredCourses(data, 0)),
+                                featuredCourses(data, 1)
+                              ],
+                            ),
+                          ),
+                          kheigh20,
+                          kheigh20,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                featuredCourses(data, 2),
+                                featuredCourses(data, 3)
+                              ],
+                            ),
+                          ),
+                          kheigh20,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                //kwidth20,
+                                appHeadings(content: "All Courses"),
+                                IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(Iconsax.arrow_right_14))
+                              ],
+                            ),
+                          ),
+                          kheigh20,
+                          kheight10,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                featuredCourses(data, 1),
+                                featuredCourses(data, 0)
+                              ],
+                            ),
+                          ),
+                          kheigh20,
+                          kheigh20,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                featuredCourses(data, 2),
+                                featuredCourses(data, 3)
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return appHeadings(
+                          content: "Failed to fetch the courses");
+                    }
+                  })
             ],
           ),
         ),
@@ -181,8 +214,48 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
     );
   }
 
-  featuredCourses() {
-    return Stack(
+  featuredCourses(PaidCourseModel data, int index) {
+    return Container(
+      height: 208,
+      width: 190.w,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: themeGreen)),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Image.network(data.data[index].image,
+                  height: 100, fit: BoxFit.contain),
+            ),
+            kheight10,
+            Text(
+              data.data[index].category,
+              maxLines: 1,
+              style: GoogleFonts.poppins(fontSize: 15, color: themeGreen),
+            ),
+            //kheight5,
+            Text(
+              data.data[index].title,
+              maxLines: 1,
+              style: GoogleFonts.poppins(
+                textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
+            ),
+            Text(
+              "599",
+              style: GoogleFonts.poppins(
+                  textStyle: TextStyle(
+                      color: kred, fontSize: 17, fontWeight: FontWeight.w500)),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    /* Stack(
       clipBehavior: Clip.none,
       children: [
         Container(
@@ -199,7 +272,7 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
             children: [
               kwidth15,
               Image.network(
-                "https://www.vectorlogo.zone/logos/nodejs/nodejs-ar21.png",
+                "https://eaglone.s3.amazonaws.com/image-1679293692722-871253182.png",
                 height: 80.h,
               ),
             ],
@@ -208,21 +281,12 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
         Positioned(
           bottom: 40,
           left: 10,
-          child: FutureBuilder(
-              future: getMongo(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  var data = MongoModel.fromJson(snapshot.data![1]);
-                  return Text(
-                    data.name,
-                    style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
-                            fontSize: 20.sp, fontWeight: FontWeight.w500)),
-                  );
-                } else {
-                  return CircularProgressIndicator();
-                }
-              }),
+          child: Text(
+            "Name",
+            style: GoogleFonts.poppins(
+                textStyle:
+                    TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500)),
+          ),
         ),
         Positioned(
           bottom: 20,
@@ -235,6 +299,6 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
           ),
         )
       ],
-    );
+    ); */
   }
 }

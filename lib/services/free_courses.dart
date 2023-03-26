@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class FreeCourses {
   bool loaded = false;
   Future<FreeProductModel?> getProducts() async {
-    log("Starting to fetch");
+    log("Starting to fetch free courses");
     String url = "https://eaglone-api.onrender.com/free-courses";
     Map<String, String> headers = {
       "apikey":

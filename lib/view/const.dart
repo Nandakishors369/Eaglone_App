@@ -16,6 +16,7 @@ var themeGreen = Color(0xFF3BECB8);
 //heights
 var kheigh20 = SizedBox(height: 20.h);
 var kheight10 = SizedBox(height: 10.h);
+var kheight5 = SizedBox(height: 5.h);
 var kheight40 = SizedBox(height: 40.h);
 // widths
 var kwidth5 = SizedBox(width: 5.w);
