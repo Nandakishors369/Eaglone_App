@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:eaglone/model/Product%20Model/paidcourse_model.dart';
 import 'package:eaglone/view/Cart/Cart_Screen.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/const.dart';
 import 'package:eaglone/view/const.dart';
@@ -12,8 +13,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ProductScreen extends StatefulWidget {
-  const ProductScreen({super.key});
-
+  ProductScreen({super.key, required this.data, required this.index});
+  PaidCourseModel data;
+  int index;
   @override
   State<ProductScreen> createState() => _ProductScreenState();
 }
@@ -56,15 +58,15 @@ class _ProductScreenState extends State<ProductScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: ImageSlideshow(height: 400.h, children: [
               Image.network(
-                "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+                widget.data.data[widget.index].image,
                 fit: BoxFit.cover,
               ),
               Image.network(
-                "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+                widget.data.data[widget.index].image,
                 fit: BoxFit.cover,
               ),
               Image.network(
-                "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZHVjdHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+                widget.data.data[widget.index].image,
                 fit: BoxFit.cover,
               ),
             ]),
@@ -74,7 +76,7 @@ class _ProductScreenState extends State<ProductScreen> {
             children: [
               kwidth15,
               Text(
-                "React Frontend Course",
+                widget.data.data[widget.index].title,
                 style: GoogleFonts.poppins(
                     textStyle:
                         TextStyle(fontSize: 25, fontWeight: FontWeight.w500)),
@@ -85,7 +87,7 @@ class _ProductScreenState extends State<ProductScreen> {
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
             child: Text(
-              "The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from de Finibus Bonorum et Malorum by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.",
+              widget.data.data[widget.index].description,
               style: GoogleFonts.poppins(),
             ),
           ),

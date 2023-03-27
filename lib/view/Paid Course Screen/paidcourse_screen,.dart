@@ -7,6 +7,7 @@ import 'package:eaglone/model/Product%20Model/paidcourse_model.dart';
 import 'package:eaglone/model/mongo_model.dart';
 import 'package:eaglone/model/product_model.dart';
 import 'package:eaglone/services/paid_courses.dart';
+import 'package:eaglone/view/Paid%20Course%20Screen/allcourse_screen.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/const.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/produc_screen.dart';
 import 'package:eaglone/view/const.dart';
@@ -19,6 +20,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PaidCourseScreen extends StatefulWidget {
   const PaidCourseScreen({super.key});
@@ -45,8 +48,13 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                        onTap: () {
-                          getMongo();
+                        onTap: () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          var token = prefs.get('token');
+                          Map<String, dynamic> decodedToken =
+                              JwtDecoder.decode(token.toString());
+                          log(decodedToken.toString());
                         },
                         child: Icon(Iconsax.notification_bing)),
                     Text(
@@ -136,16 +144,7 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                ProductScreen(),
-                                          ));
-                                    },
-                                    child: featuredCourses(data, 0)),
+                                featuredCourses(data, 0),
                                 featuredCourses(data, 1)
                               ],
                             ),
@@ -165,15 +164,25 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
                           kheigh20,
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                //kwidth20,
-                                appHeadings(content: "All Courses"),
-                                IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(Iconsax.arrow_right_14))
-                              ],
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AllCourse(),
+                                    ));
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  //kwidth20,
+                                  appHeadings(content: "All Courses"),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Iconsax.arrow_right_14))
+                                ],
+                              ),
                             ),
                           ),
                           kheigh20,
@@ -215,42 +224,54 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
   }
 
   featuredCourses(PaidCourseModel data, int index) {
-    return Container(
-      height: 208,
-      width: 190.w,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: themeGreen)),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Image.network(data.data[index].image,
-                  height: 100, fit: BoxFit.contain),
-            ),
-            kheight10,
-            Text(
-              data.data[index].category,
-              maxLines: 1,
-              style: GoogleFonts.poppins(fontSize: 15, color: themeGreen),
-            ),
-            //kheight5,
-            Text(
-              data.data[index].title,
-              maxLines: 1,
-              style: GoogleFonts.poppins(
-                textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductScreen(data: data, index: index),
+            ));
+      },
+      child: Container(
+        height: 208,
+        width: 190.w,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: themeGreen)),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Image.network(data.data[index].image,
+                    height: 100, fit: BoxFit.contain),
               ),
-            ),
-            Text(
-              "599",
-              style: GoogleFonts.poppins(
-                  textStyle: TextStyle(
-                      color: kred, fontSize: 17, fontWeight: FontWeight.w500)),
-            ),
-          ],
+              kheight10,
+              Text(
+                data.data[index].category,
+                maxLines: 1,
+                style: GoogleFonts.poppins(fontSize: 15, color: themeGreen),
+              ),
+              //kheight5,
+              Text(
+                data.data[index].title,
+                maxLines: 1,
+                style: GoogleFonts.poppins(
+                  textStyle:
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                ),
+              ),
+              Text(
+                "599",
+                style: GoogleFonts.poppins(
+                    textStyle: TextStyle(
+                        color: kred,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w500)),
+              ),
+            ],
+          ),
         ),
       ),
     );

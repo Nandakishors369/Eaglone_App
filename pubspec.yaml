@@ -48,6 +48,7 @@ dependencies:
   google_sign_in: ^5.4.2
   http: ^0.13.5
   iconsax: ^0.0.8
+  jwt_decoder: ^2.0.1
   lottie: 
   mongo_dart: ^0.8.2
   otp_text_field: ^1.1.3
