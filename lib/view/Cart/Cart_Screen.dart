@@ -1,13 +1,19 @@
 import 'dart:ui';
 
+import 'package:eaglone/model/Cart%20Model/cart_model.dart';
+import 'package:eaglone/services/cart.dart';
 import 'package:eaglone/view/Payment%20and%20Confirmation/payment_screen.dart';
 import 'package:eaglone/view/const.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:marquee/marquee.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -17,6 +23,8 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  Cart cart = Cart();
+  int total = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,12 +50,30 @@ class _CartScreenState extends State<CartScreen> {
           ),
           kheigh20,
           kheigh20,
-          cartItems(),
-          kheight10,
-          cartItems(),
-          SizedBox(
-            height: 320.h,
+          Expanded(
+            child: FutureBuilder(
+                future: cart.getCart(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CupertinoActivityIndicator();
+                  } else if (snapshot.hasData && snapshot.data != null) {
+                    var data = snapshot.data!;
+
+                    return ListView.builder(
+                      itemCount: data.data.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return cartItems(data: data, index: index);
+                      },
+                    );
+                  } else {
+                    return Text("Something Went Wrong");
+                  }
+                }),
           ),
+          /*  SizedBox(
+            height: 320.h,
+          ), */
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
@@ -59,14 +85,43 @@ class _CartScreenState extends State<CartScreen> {
                       textStyle:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.w500)),
                 ),
-                Text(
-                  "499/-",
-                  style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                          color: themeGreen,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w500)),
-                ),
+                FutureBuilder(
+                    future: cart.getCart(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Text(
+                          "0/-",
+                          style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                  color: themeGreen,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w500)),
+                        );
+                      } else if (snapshot.hasData && snapshot.data != null) {
+                        var data = snapshot.data!;
+                        int price = 0;
+                        for (int i = 0; i < data.data.length; i++) {
+                          price = price + data.data[i].ourPrice;
+                        }
+                        return Text(
+                          "$price/-",
+                          style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                  color: themeGreen,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w500)),
+                        );
+                      } else {
+                        return Text(
+                          "price/-",
+                          style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                  color: themeGreen,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w500)),
+                        );
+                      }
+                    }),
               ],
             ),
           ),
@@ -101,13 +156,14 @@ class _CartScreenState extends State<CartScreen> {
                 ),
               ),
             ),
-          )
+          ),
+          kheight10
         ],
       )),
     );
   }
 
-  Padding cartItems() {
+  Padding cartItems({required CartModel data, required int index}) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: GestureDetector(
@@ -133,10 +189,10 @@ class _CartScreenState extends State<CartScreen> {
                     kheigh20,
                     kheight10,
                     Text(
-                      "Product Details",
+                      data.data[index].title,
                       style: GoogleFonts.poppins(
-                          textStyle: TextStyle(fontSize: 20.sp)),
-                    ),
+                          textStyle: TextStyle(fontSize: 15.sp)),
+                    )
                   ],
                 ),
               ],

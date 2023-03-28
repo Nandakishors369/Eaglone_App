@@ -54,8 +54,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             kheigh20,
             headingss(heading: "Order History"),
             kheigh20,
-            headingss(heading: "Address"),
-            kheigh20,
             headingss(heading: "Wallet"),
             kheigh20,
             headingss(heading: "App Settings"),

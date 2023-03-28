@@ -18,6 +18,9 @@ var kheigh20 = SizedBox(height: 20.h);
 var kheight10 = SizedBox(height: 10.h);
 var kheight5 = SizedBox(height: 5.h);
 var kheight40 = SizedBox(height: 40.h);
+var kheight100 = SizedBox(
+  height: 100.h,
+);
 // widths
 var kwidth5 = SizedBox(width: 5.w);
 var kwidth10 = SizedBox(width: 10.w);

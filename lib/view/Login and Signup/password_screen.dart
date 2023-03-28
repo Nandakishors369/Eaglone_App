@@ -73,4 +73,61 @@ class _PasswordScreenState extends State<PasswordScreen> {
       ),
     ])));
   }
+
+  bool _obscureText = true;
+  Padding ptextField(
+      {required String hint,
+      required TextEditingController controller,
+      // required var condition,
+      required String? type,
+      required TextInputType? keyboard}) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
+      child: TextFormField(
+        keyboardType: keyboard,
+
+        obscureText: _obscureText,
+        validator: (value) {
+          if (value == null || value.length > 4) {
+            return null;
+          } else {
+            return "Enter a passowrd of atleast 8 charcters ";
+          }
+        },
+        controller: controller,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        cursorColor: kblack, //
+        decoration: InputDecoration(
+          suffixIcon: IconButton(
+            onPressed: () {
+              setState(() {
+                if (_obscureText == true) {
+                  _obscureText = false;
+                } else {
+                  _obscureText = true;
+                }
+              });
+            },
+            icon: Icon(
+              _obscureText ? Icons.visibility_off : Icons.visibility,
+              color: Colors.grey,
+            ),
+          ),
+          hintText: "$hint",
+          hintStyle: GoogleFonts.karla(
+            textStyle: TextStyle(),
+          ),
+          focusColor: kblack,
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: kgrey),
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: kgrey),
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+        ),
+      ),
+    );
+  }
 }

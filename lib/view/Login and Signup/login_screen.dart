@@ -69,19 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         TextButton(
-                          onPressed: () async {
-                            //await signUp();
-                            /* resetPass(
-                              email: lemailController.text.trim(),
-                              context: context,
-                            ); */
-
-                            /* Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => PasswordScreen(),
-                                )); */
-                          },
+                          onPressed: () async {},
                           child: Text(
                             "Forgot Password ?",
                             style: GoogleFonts.karla(
@@ -113,64 +101,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             setState(() {
                               _isLoading = true;
                             });
-
-                            /*  if (snapshot.hasData) {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => NavigationBarScreen(),
-                                ),
-                              );
-                            } else {
-                              showSnackBar(context, "Credentials Incorrect");
-                            } */
                           }
                         },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: themeGreen),
-                        child: Text(
-                          "Continue",
-                          style: GoogleFonts.poppins(),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "or",
-                            style: GoogleFonts.karla(
-                              fontSize: 19.sp,
-                              textStyle: TextStyle(color: kblack),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 270.w,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          final provider = Provider.of<GoolgeSignInProvider>(
-                              context,
-                              listen: false);
-                          provider.googleLogin().then(
-                                (value) => Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => NavigationBarScreen(),
-                                  ),
-                                ),
-                              );
-                        },
-                        style:
-                            ElevatedButton.styleFrom(backgroundColor: kblack),
                         child: _isLoading
                             ? CupertinoActivityIndicator()
                             : Text(
-                                "Continue With Google",
+                                "Continue",
                                 style: GoogleFonts.poppins(),
                               ),
                       ),
@@ -250,6 +188,63 @@ class _LoginScreenState extends State<LoginScreen> {
               builder: (context) => NavigationBarScreen(),
             ),
           ), */
+  }
+
+  bool _obscureText = true;
+  Padding ptextField(
+      {required String hint,
+      required TextEditingController controller,
+      // required var condition,
+      required String? type,
+      required TextInputType? keyboard}) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
+      child: TextFormField(
+        keyboardType: keyboard,
+
+        obscureText: _obscureText,
+        validator: (value) {
+          if (value == null || value.length > 4) {
+            return null;
+          } else {
+            return "Enter a passowrd of atleast 8 charcters ";
+          }
+        },
+        controller: controller,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        cursorColor: kblack, //
+        decoration: InputDecoration(
+          suffixIcon: IconButton(
+            onPressed: () {
+              setState(() {
+                if (_obscureText == true) {
+                  _obscureText = false;
+                } else {
+                  _obscureText = true;
+                }
+              });
+            },
+            icon: Icon(
+              _obscureText ? Icons.visibility_off : Icons.visibility,
+              color: Colors.grey,
+            ),
+          ),
+          hintText: "$hint",
+          hintStyle: GoogleFonts.karla(
+            textStyle: TextStyle(),
+          ),
+          focusColor: kblack,
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: kgrey),
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: kgrey),
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+        ),
+      ),
+    );
   }
 }
 

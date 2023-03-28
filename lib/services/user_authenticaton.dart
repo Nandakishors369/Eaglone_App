@@ -5,6 +5,8 @@ import 'package:eaglone/model/Authentication%20Model/signup_data.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+var tokenLog;
+
 class UserAuth {
   bool verified = false;
   bool otpTrue = false;
@@ -76,6 +78,7 @@ class UserAuth {
         var data = jsonDecode(response.body);
 
         prefs.setString("token", data['token']);
+
         otpTrue = true;
         log(response.body);
       } else {

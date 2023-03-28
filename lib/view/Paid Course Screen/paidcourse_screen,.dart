@@ -7,6 +7,7 @@ import 'package:eaglone/model/Product%20Model/paidcourse_model.dart';
 import 'package:eaglone/model/mongo_model.dart';
 import 'package:eaglone/model/product_model.dart';
 import 'package:eaglone/services/paid_courses.dart';
+import 'package:eaglone/view/Cart/Cart_Screen.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/allcourse_screen.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/const.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/produc_screen.dart';
@@ -64,7 +65,11 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
                     ////insert data to mongo db example
                     GestureDetector(
                         onTap: () {
-                          insertUser("Ruby", "799");
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CartScreen(),
+                              ));
                         },
                         child: Icon(Iconsax.shopping_cart)),
                   ],
@@ -134,7 +139,8 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
                   future: paid.getCourses(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return appHeadings(content: "Fetching you coureses");
+                      return Center(
+                          child: appHeadings(content: "Fetching you courses"));
                     } else if (snapshot.hasData && snapshot.data != null) {
                       var data = snapshot.data!;
                       return Column(
@@ -275,51 +281,5 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
         ),
       ),
     );
-
-    /* Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-              color: kwhite,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: themeGreen)),
-          height: 120.h,
-          width: 190.w,
-        ),
-        Positioned(
-          bottom: 70.h,
-          child: Row(
-            children: [
-              kwidth15,
-              Image.network(
-                "https://eaglone.s3.amazonaws.com/image-1679293692722-871253182.png",
-                height: 80.h,
-              ),
-            ],
-          ),
-        ),
-        Positioned(
-          bottom: 40,
-          left: 10,
-          child: Text(
-            "Name",
-            style: GoogleFonts.poppins(
-                textStyle:
-                    TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500)),
-          ),
-        ),
-        Positioned(
-          bottom: 20,
-          left: 10,
-          child: Text(
-            "599/-",
-            style: GoogleFonts.poppins(
-                textStyle: TextStyle(
-                    color: kred, fontSize: 15.sp, fontWeight: FontWeight.w500)),
-          ),
-        )
-      ],
-    ); */
   }
 }
