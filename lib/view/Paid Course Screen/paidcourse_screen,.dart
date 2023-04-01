@@ -6,7 +6,7 @@ import 'package:eaglone/Mongo%20Db/mongodb.dart';
 import 'package:eaglone/model/Product%20Model/paidcourse_model.dart';
 import 'package:eaglone/model/mongo_model.dart';
 import 'package:eaglone/model/product_model.dart';
-import 'package:eaglone/services/paid_courses.dart';
+import 'package:eaglone/Repositories/paid_courses.dart';
 import 'package:eaglone/view/Cart/Cart_Screen.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/allcourse_screen.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/const.dart';

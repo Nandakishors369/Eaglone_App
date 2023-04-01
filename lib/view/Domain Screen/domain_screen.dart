@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eaglone/model/Product%20Model/freecourse_model.dart';
-import 'package:eaglone/services/getdata.dart';
+import 'package:eaglone/Repositories/getdata.dart';
 import 'package:eaglone/view/Domain%20Screen/details_screen.dart';
 import 'package:eaglone/view/Domain%20Screen/playlist_screen.dart';
 import 'package:eaglone/view/const.dart';

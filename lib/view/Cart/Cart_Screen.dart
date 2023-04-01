@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:eaglone/model/Cart%20Model/cart_model.dart';
-import 'package:eaglone/services/cart.dart';
+import 'package:eaglone/Repositories/cart.dart';
 import 'package:eaglone/view/Payment%20and%20Confirmation/payment_screen.dart';
 import 'package:eaglone/view/const.dart';
 import 'package:eaglone/view/widgets/common_widgets.dart';
@@ -24,7 +24,6 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  Cart cart = Cart();
   int total = 0;
   @override
   Widget build(BuildContext context) {
@@ -38,14 +37,21 @@ class _CartScreenState extends State<CartScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(Iconsax.arrow_left),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Icon(Iconsax.arrow_left)),
                 Text(
                   "Order Details",
                   style: GoogleFonts.montserrat(
                       textStyle: TextStyle(
                           fontSize: 20.sp, fontWeight: FontWeight.w500)),
                 ),
-                Icon(Icons.delete_outline),
+                Icon(
+                  Iconsax.arrow_left,
+                  color: kwhite,
+                )
               ],
             ),
           ),
@@ -61,7 +67,7 @@ class _CartScreenState extends State<CartScreen> {
           ),
           Expanded(
             child: FutureBuilder(
-                future: cart.getCart(),
+                future: CartRepository.getCart(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return CupertinoActivityIndicator();
@@ -93,7 +99,7 @@ class _CartScreenState extends State<CartScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: FutureBuilder(
-                future: cart.getCart(),
+                future: CartRepository.getCart(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Text(
@@ -244,7 +250,9 @@ class _CartScreenState extends State<CartScreen> {
                   height: 140,
                   width: 140,
                   decoration: BoxDecoration(
-                      color: themeGreen,
+                      color: kgrey,
+                      image: DecorationImage(
+                          image: NetworkImage(data.data[index].image)),
                       borderRadius: BorderRadius.circular(10)),
                 ),
                 kwidth15,
@@ -268,7 +276,7 @@ class _CartScreenState extends State<CartScreen> {
                     Row(
                       children: [
                         Text(
-                          "${data.data[index].price}",
+                          "${data.data[index].price}/-",
                           style: GoogleFonts.poppins(
                               fontSize: 16, fontWeight: FontWeight.w500),
                         ),
@@ -277,7 +285,14 @@ class _CartScreenState extends State<CartScreen> {
                         kwidth20,
                         kwidth10, */
                         IconButton(
-                            onPressed: () {}, icon: Icon(Icons.delete_outline))
+                            onPressed: () async {
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              CartRepository.deleteCart(
+                                  courseid: data.data[index].id);
+                              setState(() {});
+                            },
+                            icon: Icon(Icons.delete_outline))
                       ],
                     )
                   ],

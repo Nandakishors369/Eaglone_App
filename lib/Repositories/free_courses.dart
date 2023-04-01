@@ -36,7 +36,6 @@ class FreeCourses {
         log(e.toString());
       }
     } else {
-      log("bloc like");
       return freeProductModel;
     }
   }

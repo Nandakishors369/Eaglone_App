@@ -1,4 +1,4 @@
-import 'package:eaglone/services/news_services.dart';
+import 'package:eaglone/Repositories/news_services.dart';
 import 'package:eaglone/view/const.dart';
 import 'package:eaglone/view/widgets/common_widgets.dart';
 import 'package:flutter/cupertino.dart';

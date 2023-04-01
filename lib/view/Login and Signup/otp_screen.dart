@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:eaglone/services/user_authenticaton.dart';
+import 'package:eaglone/Repositories/user_authenticaton.dart';
 import 'package:eaglone/view/Navigation/navigation_bar.dart';
 import 'package:eaglone/view/const.dart';
 import 'package:flutter/material.dart';

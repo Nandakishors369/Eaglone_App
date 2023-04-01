@@ -33,24 +33,30 @@ class Datum {
     required this.id,
     required this.title,
     required this.category,
+    required this.image,
     required this.ourPrice,
     required this.price,
+    required this.percentage,
     required this.premium,
   });
 
   String id;
   String title;
   String category;
+  String image;
   int ourPrice;
   int price;
+  int percentage;
   bool premium;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["_id"],
         title: json["title"],
         category: json["category"],
+        image: json["image"],
         ourPrice: json["ourPrice"],
         price: json["price"],
+        percentage: json["percentage"],
         premium: json["premium"],
       );
 
@@ -58,8 +64,10 @@ class Datum {
         "_id": id,
         "title": title,
         "category": category,
+        "image": image,
         "ourPrice": ourPrice,
         "price": price,
+        "percentage": percentage,
         "premium": premium,
       };
 }

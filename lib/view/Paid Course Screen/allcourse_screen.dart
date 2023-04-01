@@ -1,6 +1,6 @@
 import 'package:eaglone/model/Product%20Model/paidcourse_model.dart';
-import 'package:eaglone/services/free_courses.dart';
-import 'package:eaglone/services/paid_courses.dart';
+import 'package:eaglone/Repositories/free_courses.dart';
+import 'package:eaglone/Repositories/paid_courses.dart';
 import 'package:eaglone/view/const.dart';
 import 'package:eaglone/view/widgets/common_widgets.dart';
 import 'package:flutter/cupertino.dart';

@@ -3,7 +3,7 @@
 import 'dart:developer';
 
 import 'package:eaglone/main.dart';
-import 'package:eaglone/services/user_authenticaton.dart';
+import 'package:eaglone/Repositories/user_authenticaton.dart';
 import 'package:eaglone/view/Login%20and%20Signup/login_screen.dart';
 import 'package:eaglone/view/Login%20and%20Signup/otp_screen.dart';
 import 'package:eaglone/view/Login%20and%20Signup/widgets/common_widgets.dart';

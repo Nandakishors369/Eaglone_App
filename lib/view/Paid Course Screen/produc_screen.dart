@@ -6,7 +6,7 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:eaglone/main.dart';
 import 'package:eaglone/model/Product%20Model/paidcourse_model.dart';
-import 'package:eaglone/services/cart.dart';
+import 'package:eaglone/Repositories/cart.dart';
 import 'package:eaglone/view/Cart/Cart_Screen.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/const.dart';
 import 'package:eaglone/view/const.dart';
@@ -154,8 +154,8 @@ class _ProductScreenState extends State<ProductScreen> {
               Map<String, dynamic> decodedToken =
                   JwtDecoder.decode(token.toString());
               decodedToken['_id'];
-              Cart cart = Cart();
-              await cart.addtoCart(
+
+              await CartRepository.addtoCart(
                   courseid: widget.data.data[widget.index].id,
                   userid: decodedToken['_id'],
                   token: token.toString());

@@ -3,16 +3,16 @@ import 'dart:developer';
 
 import 'dart:ui';
 import 'package:eaglone/model/Product%20Model/freecourse_model.dart';
-import 'package:eaglone/services/free_courses.dart';
+import 'package:eaglone/Repositories/free_courses.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animations/animations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eaglone/Mongo%20Db/mongodb.dart';
 import 'package:eaglone/model/free_courses.dart';
 
-import 'package:eaglone/services/getdata.dart';
-import 'package:eaglone/services/news_services.dart';
-import 'package:eaglone/services/user_authenticaton.dart';
+import 'package:eaglone/Repositories/getdata.dart';
+import 'package:eaglone/Repositories/news_services.dart';
+import 'package:eaglone/Repositories/user_authenticaton.dart';
 import 'package:lottie/lottie.dart';
 import 'package:eaglone/view/Domain%20Screen/domain_screen.dart';
 import 'package:eaglone/view/Domain%20Search/Dsearch_screen.dart';

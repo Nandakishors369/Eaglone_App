@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:eaglone/services/news_services.dart';
+import 'package:eaglone/Repositories/news_services.dart';
 import 'package:http/http.dart' as http;
 
 String baseUrl = "http://192.168.64.140:3000/test";

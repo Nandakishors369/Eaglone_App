@@ -102,22 +102,20 @@ class _PaymentScreenState extends State<PaymentScreen> {
             GestureDetector(
               onTap: () {},
               child: Container(
-                height: 60.h,
-                width: 400.w,
+                height: 50.h,
+                width: 375.w,
                 decoration: BoxDecoration(
-                  color: themeGreen,
-                  borderRadius: BorderRadius.circular(5.r),
-                ),
+                    color: themeGreen, borderRadius: BorderRadius.circular(10)),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
                     child: Text(
-                      "Confirm And Pay",
+                      "Confirm and Pay",
                       style: GoogleFonts.poppins(
                         textStyle: TextStyle(
                           color: kwhite,
                           fontWeight: FontWeight.w500,
-                          fontSize: 25.sp,
+                          fontSize: 20.sp,
                         ),
                       ),
                     ),
