@@ -42,6 +42,8 @@ class Cart {
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token.toString());
     String userid = decodedToken['_id'];
     String url = "https://eaglone-api.onrender.com/get-cart?userId=$userid";
+    log(token.toString());
+    log(userid);
     Map<String, String> headers = {
       "apikey":
           "cart \$2b\$14\$Spul3qDosNUGfGA.AnYWl.W1DH4W4AnQsFrNVEKJi6.CsbgncfCUi",
@@ -56,7 +58,34 @@ class Cart {
       return cart;
     } else {
       log("something went wrong while fetching the cart ${response.statusCode}");
+      log(response.body);
       return null;
+    }
+  }
+
+  Future deleteCart(
+      {required String courseid,
+      required String userid,
+      required String token}) async {
+    String url = "https://eaglone-api.onrender.com/remove-from-cart";
+    Map<String, String> headers = {
+      "apikey":
+          "cart \$2b\$14\$Spul3qDosNUGfGA.AnYWl.W1DH4W4AnQsFrNVEKJi6.CsbgncfCUi",
+      "authorization": "cart $token"
+    };
+
+    var body = {"courseId": courseid, "userId": userid};
+    http.Response response;
+
+    try {
+      response = await http.post(Uri.parse(url), body: body, headers: headers);
+      if (response.statusCode == 200) {
+        log("Item removed from cart");
+      } else {
+        log("something went wrong");
+      }
+    } catch (e) {
+      log(e.toString());
     }
   }
 }

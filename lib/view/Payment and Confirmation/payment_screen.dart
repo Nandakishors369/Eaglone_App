@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pay/pay.dart';
-
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../const.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -19,6 +19,7 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
+  var razorpay = Razorpay();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

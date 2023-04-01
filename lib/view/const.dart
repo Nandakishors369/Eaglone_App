@@ -13,6 +13,7 @@ var kdblue = Color(0xFF2E6490);
 var kred = Colors.red;
 var kgrey = Color(0xFF90A4AE);
 var themeGreen = Color(0xFF3BECB8);
+
 //heights
 var kheigh20 = SizedBox(height: 20.h);
 var kheight10 = SizedBox(height: 10.h);
@@ -26,6 +27,7 @@ var kwidth5 = SizedBox(width: 5.w);
 var kwidth10 = SizedBox(width: 10.w);
 var kwidth15 = SizedBox(width: 15.w);
 var kwidth20 = SizedBox(width: 20.w);
+var kwidth100 = SizedBox(width: 100.w);
 
 //others
 String sampleText =
