@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:shimmer/shimmer.dart';
 
 //colors
 var kwhite = Colors.white;
@@ -39,3 +41,111 @@ const MONGO_URL =
 const COLLECTION = "products";
 
 Size size = const Size(423.5, 941.1);
+
+//loading
+var allCourseLoading = Shimmer.fromColors(
+    baseColor: Colors.grey[300]!,
+    highlightColor: Colors.grey[100]!,
+    child: GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: 10,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, crossAxisSpacing: 20, mainAxisSpacing: 20),
+      itemBuilder: (context, index) {
+        return Container(
+          height: 100.h,
+          width: 190.w,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+        );
+      },
+    ));
+var loadinPaidCourse = Shimmer.fromColors(
+  child: Column(
+    children: [
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [loadingFeatured(), loadingFeatured()],
+        ),
+      ),
+      kheigh20,
+      kheigh20,
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [loadingFeatured(), loadingFeatured()],
+        ),
+      ),
+      kheigh20,
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: GestureDetector(
+          onTap: () {},
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              //kwidth20,
+              Container(
+                decoration: BoxDecoration(
+                    color: kblack, borderRadius: BorderRadius.circular(20)),
+                height: 20,
+                width: 60,
+              ),
+              Container(
+                height: 20.h,
+                width: 60,
+                decoration: BoxDecoration(
+                    color: kblack, borderRadius: BorderRadius.circular(20)),
+              )
+            ],
+          ),
+        ),
+      ),
+      kheigh20,
+      kheight10,
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [loadingFeatured(), loadingFeatured()],
+        ),
+      ),
+      kheigh20,
+      kheigh20,
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [loadingFeatured(), loadingFeatured()],
+        ),
+      ),
+    ],
+  ),
+  baseColor: Colors.grey[300]!,
+  highlightColor: Colors.grey[100]!,
+);
+
+loadingFeatured() {
+  return GestureDetector(
+    child: Container(
+      height: 208,
+      width: 190.w,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: kblack,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [],
+        ),
+      ),
+    ),
+  );
+}

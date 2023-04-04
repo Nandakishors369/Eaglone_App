@@ -155,18 +155,15 @@ class _ProductScreenState extends State<ProductScreen> {
                   JwtDecoder.decode(token.toString());
               decodedToken['_id'];
 
-              await CartRepository.addtoCart(
+              var message = await CartRepository.addtoCart(
                   courseid: widget.data.data[widget.index].id,
                   userid: decodedToken['_id'],
+                  context: context,
                   token: token.toString());
               setState(() {
                 isloading = false;
               });
-              ScaffoldMessenger(
-                  child: SnackBar(
-                content: Text("Added to cart"),
-                duration: Duration(seconds: 6),
-              ));
+              showSnackBar(context, message);
               log("doneee");
             },
             child: Container(

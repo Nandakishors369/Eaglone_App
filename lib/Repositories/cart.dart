@@ -1,8 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'dart:developer';
 
 import 'package:eaglone/model/Cart%20Model/cart_model.dart';
+import 'package:eaglone/view/Login%20and%20Signup/loginuser.dart';
 import 'package:eaglone/view/api_keys.dart';
+import 'package:eaglone/view/utils/snackbar.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,7 +16,8 @@ class CartRepository {
   static Future addtoCart(
       {required String courseid,
       required String userid,
-      required String token}) async {
+      required String token,
+      required BuildContext context}) async {
     log("adding to cart");
 
     String url = "https://eaglone-api.onrender.com/add-to-cart";
@@ -26,10 +32,21 @@ class CartRepository {
     try {
       response = await http.post(Uri.parse(url), headers: headers, body: body);
       if (response.statusCode == 200) {
-        log("added to cart succesfully");
+        log("Product Added to Cart");
+        return "Product Added to Cart";
       } else if (response.statusCode == 400) {
-        log(response.statusCode.toString());
-        log("not added to cart");
+        log("product already in cart");
+        return "Product Already in the cart";
+      } else if (response.statusCode >= 401 && response.statusCode <= 403) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.clear();
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => LoginUserScreen(),
+            ),
+            (route) => false);
+        showSnackBar(context, "Please Login Again");
       }
     } catch (e) {
       log(e.toString());

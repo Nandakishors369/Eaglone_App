@@ -9,6 +9,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:lottie/lottie.dart';
+import 'package:shimmer/shimmer.dart';
 
 class AllCourse extends StatelessWidget {
   AllCourse({super.key});
@@ -22,81 +25,62 @@ class AllCourse extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Center(child: appHeadings(content: "All Courses")),
+                kheigh20,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Icon(Iconsax.arrow_left)),
+                      Text(
+                        "All Courses",
+                        style: GoogleFonts.montserrat(
+                            textStyle: TextStyle(
+                                fontSize: 20.sp, fontWeight: FontWeight.w500)),
+                      ),
+                      Icon(
+                        Iconsax.arrow_left,
+                        color: kwhite,
+                      )
+                    ],
+                  ),
+                ),
+                kheigh20,
+                const CupertinoSearchTextField(),
                 kheight10,
-                CupertinoSearchTextField(),
-                kheight10,
+                kheigh20,
                 FutureBuilder(
                     future: course.getCourses(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CupertinoActivityIndicator());
+                        return allCourseLoading;
                       } else if (snapshot.hasData && snapshot.data != null) {
                         var data = snapshot.data!;
                         return GridView.builder(
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: data.data.length,
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  childAspectRatio: 190 / 208,
                                   crossAxisCount: 2,
                                   crossAxisSpacing: 20,
                                   mainAxisSpacing: 20),
                           itemBuilder: (context, index) {
-                            return SizedBox(
-                              height: 708,
-                              child: Container(
-                                height: 708,
-                                width: 190.w,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(color: themeGreen)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Center(
-                                        child: Image.network(
-                                            data.data[index].image,
-                                            height: 100,
-                                            fit: BoxFit.contain),
-                                      ),
-                                      kheight10,
-                                      Text(
-                                        data.data[index].category,
-                                        maxLines: 1,
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 15, color: themeGreen),
-                                      ),
-                                      //kheight5,
-                                      Text(
-                                        data.data[index].title,
-                                        maxLines: 1,
-                                        style: GoogleFonts.poppins(
-                                          textStyle: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                      ),
-                                      /*   Text(
-                                        "599",
-                                        style: GoogleFonts.poppins(
-                                            textStyle: TextStyle(
-                                                color: kred,
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.w500)),
-                                      ), */
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
+                            return allCourses(data, index);
                           },
                         );
                       } else {
-                        return CircularProgressIndicator();
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Lottie.asset("assets/Main.json"),
+                          ),
+                        );
                       }
                     })
               ],
@@ -110,7 +94,7 @@ class AllCourse extends StatelessWidget {
 
 allCourses(PaidCourseModel data, int index) {
   return Container(
-    height: 208,
+    height: 108.h,
     width: 190.w,
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -122,27 +106,29 @@ allCourses(PaidCourseModel data, int index) {
         children: [
           Center(
             child: Image.network(data.data[index].image,
-                height: 100, fit: BoxFit.contain),
+                height: 100.h, fit: BoxFit.contain),
           ),
           kheight10,
           Text(
             data.data[index].category,
             maxLines: 1,
-            style: GoogleFonts.poppins(fontSize: 15, color: themeGreen),
+            style: GoogleFonts.poppins(fontSize: 15.sp, color: themeGreen),
           ),
           //kheight5,
           Text(
             data.data[index].title,
             maxLines: 1,
             style: GoogleFonts.poppins(
-              textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              textStyle:
+                  TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
             ),
           ),
+
           Text(
-            "599",
+            "599/-",
             style: GoogleFonts.poppins(
                 textStyle: TextStyle(
-                    color: kred, fontSize: 17, fontWeight: FontWeight.w500)),
+                    color: kred, fontSize: 17.sp, fontWeight: FontWeight.w500)),
           ),
         ],
       ),

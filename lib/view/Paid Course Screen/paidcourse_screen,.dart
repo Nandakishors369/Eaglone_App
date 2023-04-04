@@ -95,25 +95,20 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
                         "assets/jSWwKABiFik-HD.jpg",
                         fit: BoxFit.cover,
                       ),
-                    ), /* Card(
-                      elevation: 5,
-                      child: Image.asset(
-                        "assets/jSWwKABiFik-HD.jpg",
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.r)),
-                    ), */
+                    ),
                   ),
-                  Container(
-                    height: 198.h,
-                    width: 400.w,
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(
-                        "assets/M3ni_jDqY6E-HD.jpg",
-                        fit: BoxFit.cover,
+                  GestureDetector(
+                    child: Container(
+                      height: 198.h,
+                      width: 400.w,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10)),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(
+                          "assets/M3ni_jDqY6E-HD.jpg",
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   )
@@ -139,8 +134,8 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
                   future: paid.getCourses(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                          child: appHeadings(content: "Fetching you courses"));
+                      return loadinPaidCourse; /* Center(
+                          child: appHeadings(content: "Fetching you courses")); */
                     } else if (snapshot.hasData && snapshot.data != null) {
                       var data = snapshot.data!;
                       return Column(
@@ -269,7 +264,7 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
                 ),
               ),
               Text(
-                "599",
+                "5999/-",
                 style: GoogleFonts.poppins(
                     textStyle: TextStyle(
                         color: kred,

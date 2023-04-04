@@ -264,7 +264,7 @@ class _HomeBodyState extends State<HomeBody> {
                       future: null,
                       builder: (context, snapshot) {
                         return Text(
-                          "Explore Premium \nCourses",
+                          "Explore All \nCourses",
                           style: GoogleFonts.poppins(
                             textStyle: TextStyle(
                               color: kwhite,

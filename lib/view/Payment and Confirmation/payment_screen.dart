@@ -21,6 +21,33 @@ class PaymentScreen extends StatefulWidget {
 class _PaymentScreenState extends State<PaymentScreen> {
   var razorpay = Razorpay();
   @override
+  void initState() {
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    super.initState();
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    // Do something when payment succeeds
+
+    log("payment is success");
+    log("pymtn id  ${response.paymentId}");
+    log("order id  ${response.orderId}");
+    log("sign id  ${response.signature}");
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Do something when payment fails
+    log(" ${response.message}");
+    log("err ${response.error}");
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet is selected
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -64,7 +91,27 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   GooglePayButton(
                       paymentConfigurationAsset: 'google_pay.json',
                       onPaymentResult: onGooglePayResult,
-                      paymentItems: _paymentItems)
+                      paymentItems: _paymentItems),
+                  kheigh20,
+                  ElevatedButton(
+                      onPressed: () async {
+                        Map<String, dynamic> options = {
+                          'key': 'rzp_test_DJG5OnjIJEoKOj',
+                          'amount': 2000, // amount in paise
+                          'name': 'Flutter Test',
+                          'description': 'Test Payment',
+                          'prefill': {
+                            'contact': '9999999999',
+                            'email': 'test@razorpay.com'
+                          },
+                        };
+                        try {
+                          razorpay.open(options);
+                        } catch (e) {
+                          log('Error: $e');
+                        }
+                      },
+                      child: Text("Pay"))
                 ],
               )),
             ),
