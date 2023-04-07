@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eaglone/Mongo%20Db/mongodb.dart';
+import 'package:eaglone/Repositories/history.dart';
+import 'package:eaglone/Repositories/purchased_courses.dart';
 import 'package:eaglone/model/Product%20Model/paidcourse_model.dart';
 import 'package:eaglone/model/mongo_model.dart';
 import 'package:eaglone/model/product_model.dart';
@@ -11,6 +13,7 @@ import 'package:eaglone/view/Cart/Cart_Screen.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/allcourse_screen.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/const.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/produc_screen.dart';
+import 'package:eaglone/view/Paid%20Course%20Screen/search_screen.dart';
 import 'package:eaglone/view/const.dart';
 import 'package:eaglone/view/widgets/common_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -77,9 +80,49 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
               ),
               kheigh20,
               kheight10,
-              Padding(
+              /*  Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: CupertinoSearchTextField(),
+                child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CartScreen(),
+                          ));
+                    },
+                    child: CupertinoSearchTextField()),
+              ), */
+
+              GestureDetector(
+                onTap: () async {
+                  await HistoryCourse.getCourses();
+                  showSearch(context: context, delegate: SearchPaid());
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 15),
+                  height: 35,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.search,
+                          color: kblack.withOpacity(0.5),
+                        ),
+                        kwidth5,
+                        Text("Search",
+                            style: TextStyle(
+                                fontFamily: 'San Francisco',
+                                fontSize: 17,
+                                color: kblack.withOpacity(0.5)))
+                      ],
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                      color: kblack.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8)),
+                ),
               ),
               kheigh20,
               CarouselSlider(
@@ -131,7 +174,7 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
               kheigh20,
               kheight10,
               FutureBuilder(
-                  future: paid.getCourses(),
+                  future: PaidCourses.getCourses(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return loadinPaidCourse; /* Center(
@@ -170,7 +213,8 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => AllCourse(),
+                                      builder: (context) =>
+                                          AllCourse(search: false),
                                     ));
                               },
                               child: Row(

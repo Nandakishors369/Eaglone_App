@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class AllCourses {
-  static Future getCourses() async {
+  static Future getCourses({String? courses}) async {
     String url = "https://eaglone-api.onrender.com/courses?page=3&limit=3";
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.get('token');

@@ -22,11 +22,7 @@ class Checkout {
     String userid = decodedToken['_id'];
     log(token.toString());
     log(userid);
-    Map<String, String> headers = {
-      "apikey":
-          "checkout \$2b\$14\$Spul3qDosNUGfGA.AnYWl.W1DH4W4AnQsFrNVEKJi6.CsbgncfCUi",
-      "authorization": "token $token"
-    };
+    var headers = {"apikey": "cart $api_key", "authorization": "cart $token"};
     http.Response response;
 
     var body = {

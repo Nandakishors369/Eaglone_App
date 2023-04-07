@@ -39,22 +39,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
             kheigh20,
-            headingss(
-              heading: "Edit Profile",
-              onTap: () async {
-                /*   Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProfileScreen(),
-                    )); */
-              },
-            ),
-            kheigh20,
             headingss(heading: "Course History"),
             kheigh20,
             headingss(heading: "Order History"),
-            kheigh20,
-            headingss(heading: "Wallet"),
             kheigh20,
             headingss(heading: "App Settings"),
             kheigh20,

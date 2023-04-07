@@ -13,9 +13,34 @@ import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
 
-class AllCourse extends StatelessWidget {
-  AllCourse({super.key});
+class AllCourse extends StatefulWidget {
+  AllCourse({super.key, required this.search});
+  bool search;
+  @override
+  State<AllCourse> createState() => _AllCourseState();
+}
+
+class _AllCourseState extends State<AllCourse> {
   PaidCourses course = PaidCourses();
+  FocusNode focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.search == true) {
+      Future.delayed(Duration.zero, () => focusNode.requestFocus());
+    }
+    return;
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,11 +75,44 @@ class AllCourse extends StatelessWidget {
                   ),
                 ),
                 kheigh20,
-                const CupertinoSearchTextField(),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AllCourse(search: true),
+                        ));
+                  },
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 15),
+                    height: 35,
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.search,
+                            color: kblack.withOpacity(0.5),
+                          ),
+                          kwidth5,
+                          Text("Search",
+                              style: TextStyle(
+                                  fontFamily: 'San Francisco',
+                                  fontSize: 17,
+                                  color: kblack.withOpacity(0.5)))
+                        ],
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                        color: kblack.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(8)),
+                  ),
+                ),
                 kheight10,
                 kheigh20,
                 FutureBuilder(
-                    future: course.getCourses(),
+                    future: PaidCourses.getCourses(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return allCourseLoading;
