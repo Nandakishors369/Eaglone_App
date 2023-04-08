@@ -72,7 +72,7 @@ class DetailsScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PlaylistScreen(),
+                      builder: (context) => PlaylistScreen(title: "Flutter"),
                     ),
                   );
                 },

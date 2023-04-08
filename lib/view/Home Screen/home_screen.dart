@@ -4,6 +4,8 @@ import 'dart:developer';
 import 'dart:ui';
 import 'package:eaglone/model/Product%20Model/freecourse_model.dart';
 import 'package:eaglone/Repositories/free_courses.dart';
+import 'package:eaglone/view/Home%20Screen/course_history.dart';
+import 'package:eaglone/view/Home%20Screen/your_courses.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animations/animations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -286,10 +288,22 @@ class _HomeBodyState extends State<HomeBody> {
             kwidth10,
             GestureDetector(
                 onTap: () {
-                  // postSignup();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EnrolledCourses(),
+                      ));
                 },
                 child: nothingButton("Course \nHistory")),
-            nothingButton("Your \nCourses"),
+            GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => YourCourses(),
+                      ));
+                },
+                child: nothingButton("Your \nCourses")),
             kwidth10,
           ],
         ),

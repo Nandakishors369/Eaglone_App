@@ -1,5 +1,7 @@
 import 'package:eaglone/Repositories/history.dart';
+import 'package:eaglone/Repositories/purchased_courses.dart';
 import 'package:eaglone/view/const.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -8,14 +10,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
 
-class YourCourses extends StatefulWidget {
-  const YourCourses({super.key});
+class EnrolledCourses extends StatefulWidget {
+  const EnrolledCourses({super.key});
 
   @override
-  State<YourCourses> createState() => _YourCoursesState();
+  State<EnrolledCourses> createState() => _EnrolledCoursesState();
 }
 
-class _YourCoursesState extends State<YourCourses> {
+class _EnrolledCoursesState extends State<EnrolledCourses> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +36,7 @@ class _YourCoursesState extends State<YourCourses> {
                     },
                     child: Icon(Iconsax.arrow_left)),
                 Text(
-                  "Your Courses",
+                  "Course History",
                   style: GoogleFonts.montserrat(
                       textStyle: TextStyle(
                           fontSize: 20.sp, fontWeight: FontWeight.w500)),
@@ -49,11 +51,11 @@ class _YourCoursesState extends State<YourCourses> {
           kheigh20,
           kheigh20,
           FutureBuilder(
-              future: HistoryCourse.getCourses(),
+              future: Purchased.getCourses(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
-                    child: CircularProgressIndicator(),
+                    child: CupertinoActivityIndicator(),
                   );
                 } else if (snapshot.hasData) {
                   return ListView.builder(

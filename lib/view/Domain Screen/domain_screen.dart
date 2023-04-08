@@ -121,7 +121,8 @@ class _DomainScreenState extends State<DomainScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const PlaylistScreen(),
+                      builder: (context) => PlaylistScreen(
+                          title: widget.data.data[widget.index].title),
                     ));
               },
               child: Container(
