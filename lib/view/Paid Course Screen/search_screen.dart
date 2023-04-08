@@ -1,6 +1,7 @@
 import 'dart:developer';
 
-import 'package:eaglone/Repositories/paid_courses.dart';
+import 'package:eaglone/Repositories/search.dart';
+
 import 'package:flutter/material.dart';
 
 class SearchPaid extends SearchDelegate {
@@ -26,22 +27,24 @@ class SearchPaid extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     return FutureBuilder(
-        future: PaidCourses.getCourses(query),
+        future: Search.searchCourses(query: query),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasData) {
             log(snapshot.data!.data.length.toString());
             return ListView.builder(
               itemCount: snapshot.data?.data.length,
               itemBuilder: (context, index) {
-                ListTile(
+                return ListTile(
+                  leading: Image.network(snapshot.data!.data[index].image),
                   title: Text(snapshot.data!.data[index].title),
+                  subtitle: Text(snapshot.data!.data[index].category),
                 );
               },
             );
           } else {
-            return Text("data");
+            return Center(child: Text("data"));
           }
         });
   }
@@ -49,6 +52,6 @@ class SearchPaid extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     // TODO: implement buildSuggestions
-    return Text("No data");
+    return Center(child: Text("No data"));
   }
 }

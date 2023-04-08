@@ -33,6 +33,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final MaterialColor myThemeColor = MaterialColor(0xFF3BECB8, {
+      50: Color(0xFFE0F8F6),
+      100: Color(0xFFB3E6DD),
+      200: Color(0xFF80D3C3),
+      300: Color(0xFF4DB0A9),
+      400: Color(0xFF269590),
+      500: Color(0xFF007C78),
+      600: Color(0xFF00726E),
+      700: Color(0xFF006564),
+      800: Color(0xFF005B5A),
+      900: Color(0xFF004A49),
+    });
     return ChangeNotifierProvider(
       create: (context) => GoolgeSignInProvider(),
       child: ScreenUtilInit(
@@ -45,8 +57,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               title: 'Flutter Demo',
               theme: ThemeData(
-                primarySwatch: Colors.blue,
-              ),
+                  primarySwatch: myThemeColor, primaryColor: myThemeColor),
               home: SplashScreen(),
             );
           }),

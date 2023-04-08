@@ -1,6 +1,7 @@
 import 'package:eaglone/Repositories/all_courses.dart';
 import 'package:eaglone/model/Product%20Model/All%20Course%20Model/allcourse_model.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/allcourse_screen.dart';
+import 'package:eaglone/view/Paid%20Course%20Screen/paidcourse_screen,.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/produc_screen.dart';
 import 'package:eaglone/view/const.dart';
 import 'package:eaglone/view/widgets/common_widgets.dart';
@@ -54,8 +55,8 @@ class _PremiumScreenState extends State<PremiumScreen> {
             ),
             kheigh20,
             const Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: CupertinoSearchTextField(),
+              padding: const EdgeInsets.symmetric(horizontal: 0),
+              child: customSearch(),
             ),
             kheight10,
             Padding(

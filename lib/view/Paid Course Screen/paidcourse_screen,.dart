@@ -93,37 +93,7 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
                     child: CupertinoSearchTextField()),
               ), */
 
-              GestureDetector(
-                onTap: () async {
-                  await HistoryCourse.getCourses();
-                  showSearch(context: context, delegate: SearchPaid());
-                },
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 15),
-                  height: 35,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.search,
-                          color: kblack.withOpacity(0.5),
-                        ),
-                        kwidth5,
-                        Text("Search",
-                            style: TextStyle(
-                                fontFamily: 'San Francisco',
-                                fontSize: 17,
-                                color: kblack.withOpacity(0.5)))
-                      ],
-                    ),
-                  ),
-                  decoration: BoxDecoration(
-                      color: kblack.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8)),
-                ),
-              ),
+              customSearch(),
               kheigh20,
               CarouselSlider(
                 items: [
@@ -318,6 +288,46 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class customSearch extends StatelessWidget {
+  const customSearch({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        showSearch(context: context, delegate: SearchPaid());
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 15),
+        height: 35,
+        width: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: Row(
+            children: [
+              Icon(
+                Icons.search,
+                color: kblack.withOpacity(0.5),
+              ),
+              kwidth5,
+              Text("Search",
+                  style: TextStyle(
+                      fontFamily: 'San Francisco',
+                      fontSize: 17,
+                      color: kblack.withOpacity(0.5)))
+            ],
+          ),
+        ),
+        decoration: BoxDecoration(
+            color: kblack.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8)),
       ),
     );
   }

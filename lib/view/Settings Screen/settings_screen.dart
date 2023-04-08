@@ -5,6 +5,7 @@ import 'package:eaglone/Repositories/user_authenticaton.dart';
 import 'package:eaglone/view/Login%20and%20Signup/google_login.dart';
 import 'package:eaglone/view/Login%20and%20Signup/login_screen.dart';
 import 'package:eaglone/view/Login%20and%20Signup/user_auth.dart';
+import 'package:eaglone/view/Settings%20Screen/Settings%20menu/edit_profile.dart';
 import 'package:eaglone/view/Settings%20Screen/Settings%20menu/profile_screen.dart';
 import 'package:eaglone/view/const.dart';
 import 'package:eaglone/view/widgets/common_widgets.dart';
@@ -38,6 +39,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 appHeadings(content: "Settings"),
               ],
             ),
+            kheigh20,
+            GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return EditProfileScreen();
+                    },
+                  ));
+                },
+                child: headingss(heading: "Edit Profile")),
             kheigh20,
             headingss(heading: "Course History"),
             kheigh20,
