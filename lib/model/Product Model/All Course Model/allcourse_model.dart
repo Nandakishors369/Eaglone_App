@@ -1,15 +1,17 @@
 // To parse this JSON data, do
 //
-//     final allcourse = allcourseFromJson(jsonString);
+//     final allCoursePageModel = allCoursePageModelFromJson(jsonString);
 
 import 'dart:convert';
 
-Allcourse allcourseFromJson(String str) => Allcourse.fromJson(json.decode(str));
+AllCoursePageModel allCoursePageModelFromJson(String str) =>
+    AllCoursePageModel.fromJson(json.decode(str));
 
-String allcourseToJson(Allcourse data) => json.encode(data.toJson());
+String allCoursePageModelToJson(AllCoursePageModel data) =>
+    json.encode(data.toJson());
 
-class Allcourse {
-  Allcourse({
+class AllCoursePageModel {
+  AllCoursePageModel({
     required this.message,
     required this.data,
     required this.totalPages,
@@ -19,9 +21,10 @@ class Allcourse {
   String message;
   List<Datum> data;
   int totalPages;
-  int currentPage;
+  String currentPage;
 
-  factory Allcourse.fromJson(Map<String, dynamic> json) => Allcourse(
+  factory AllCoursePageModel.fromJson(Map<String, dynamic> json) =>
+      AllCoursePageModel(
         message: json["message"],
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
         totalPages: json["totalPages"],
@@ -45,13 +48,13 @@ class Datum {
     required this.description,
     required this.classes,
     required this.views,
-    this.price,
-    this.percentage,
-    this.ourPrice,
     required this.category,
     required this.premium,
     required this.rating,
     required this.v,
+    this.price,
+    this.percentage,
+    this.ourPrice,
   });
 
   String id;
@@ -61,13 +64,13 @@ class Datum {
   String description;
   int classes;
   int views;
-  int? price;
-  int? percentage;
-  int? ourPrice;
-  Category category;
+  String category;
   bool premium;
   int rating;
   int v;
+  int? price;
+  int? percentage;
+  int? ourPrice;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["_id"],
@@ -77,13 +80,13 @@ class Datum {
         description: json["description"],
         classes: json["classes"],
         views: json["views"],
-        price: json["price"],
-        percentage: json["percentage"],
-        ourPrice: json["ourPrice"],
-        category: categoryValues.map[json["category"]]!,
+        category: json["category"],
         premium: json["premium"],
         rating: json["rating"],
         v: json["__v"],
+        price: json["price"],
+        percentage: json["percentage"],
+        ourPrice: json["ourPrice"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -94,32 +97,12 @@ class Datum {
         "description": description,
         "classes": classes,
         "views": views,
-        "price": price,
-        "percentage": percentage,
-        "ourPrice": ourPrice,
-        "category": categoryValues.reverse[category],
+        "category": category,
         "premium": premium,
         "rating": rating,
         "__v": v,
+        "price": price,
+        "percentage": percentage,
+        "ourPrice": ourPrice,
       };
-}
-
-enum Category { MOBILE_APP_DEVELOPMENT, WEB_DEVELOPMENT, PROGRAMMING }
-
-final categoryValues = EnumValues({
-  "MOBILE APP DEVELOPMENT": Category.MOBILE_APP_DEVELOPMENT,
-  "PROGRAMMING": Category.PROGRAMMING,
-  "WEB DEVELOPMENT": Category.WEB_DEVELOPMENT
-});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }

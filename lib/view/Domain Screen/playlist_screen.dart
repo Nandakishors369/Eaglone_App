@@ -2,8 +2,6 @@ import 'package:eaglone/view/Home%20Screen/video_screen.dart';
 import 'package:eaglone/view/const.dart';
 import 'package:eaglone/view/widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,9 +15,7 @@ class PlaylistScreen extends StatefulWidget {
 class _PlaylistScreenState extends State<PlaylistScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    // getvideolist();
   }
 
   @override
@@ -36,7 +32,7 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
             kheight10,
             kheigh20,
             ListView.separated(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return newsCard();
@@ -61,7 +57,7 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => VideoScreen(),
+                builder: (context) => const VideoScreen(),
               ));
         },
         child: SizedBox(
