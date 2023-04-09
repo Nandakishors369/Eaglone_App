@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.eaglone">
    <application
-        android:label="eaglone"
+        android:label="Eaglone"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

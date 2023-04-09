@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:eaglone/Repositories/search.dart';
-
+import 'package:eaglone/view/const.dart';
+import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SearchPaid extends SearchDelegate {
   @override
@@ -30,16 +32,26 @@ class SearchPaid extends SearchDelegate {
         future: Search.searchCourses(query: query),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(child: Lottie.asset("assets/registered.json"));
           } else if (snapshot.hasData) {
             log(snapshot.data!.data.length.toString());
             return ListView.builder(
               itemCount: snapshot.data?.data.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  leading: Image.network(snapshot.data!.data[index].image),
-                  title: Text(snapshot.data!.data[index].title),
-                  subtitle: Text(snapshot.data!.data[index].category),
+                  leading: CircleAvatar(
+                    backgroundColor: kwhite,
+                    backgroundImage:
+                        NetworkImage(snapshot.data!.data[index].image),
+                  ),
+                  title: Text(
+                    snapshot.data!.data[index].title,
+                    style: GoogleFonts.poppins(),
+                  ),
+                  subtitle: Text(
+                    snapshot.data!.data[index].category,
+                    style: GoogleFonts.poppins(),
+                  ),
                 );
               },
             );

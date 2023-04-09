@@ -46,8 +46,8 @@ class Datum {
     required this.views,
     required this.category,
     required this.premium,
-    required this.rating,
     required this.v,
+    this.rating,
   });
 
   String id;
@@ -59,8 +59,8 @@ class Datum {
   int views;
   String category;
   bool premium;
-  int rating;
   int v;
+  int? rating;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["_id"],
@@ -72,8 +72,8 @@ class Datum {
         views: json["views"],
         category: json["category"],
         premium: json["premium"],
-        rating: json["rating"],
         v: json["__v"],
+        rating: json["rating"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -86,7 +86,7 @@ class Datum {
         "views": views,
         "category": category,
         "premium": premium,
-        "rating": rating,
         "__v": v,
+        "rating": rating,
       };
 }

@@ -68,10 +68,16 @@ dependencies:
   
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.13.0"
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo512.png"
+  adaptive_icon_foreground: "assets/1024.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.

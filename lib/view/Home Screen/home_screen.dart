@@ -151,9 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   );
                 } else {
-                  return SnackBar(
-                      duration: const Duration(seconds: 7),
-                      content: Text("Something Went Wrong"));
+                  return Text("Something Went Wrong");
                 }
               },
             ),

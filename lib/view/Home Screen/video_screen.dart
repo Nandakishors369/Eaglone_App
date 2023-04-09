@@ -165,11 +165,11 @@ class _VideoScreenState extends State<VideoScreen> {
       padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
+          /*  Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => const VideoScreen(),
-              ));
+              )); */
         },
         child: SizedBox(
           width: 400.w,
