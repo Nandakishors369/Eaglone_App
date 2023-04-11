@@ -81,9 +81,8 @@ class CartRepository {
     }
   }
 
-  static Future deleteCart({
-    required String courseid,
-  }) async {
+  static Future deleteCart(
+      {required String courseid, required BuildContext context}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.get('token');
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token.toString());
@@ -101,6 +100,16 @@ class CartRepository {
       response = await http.post(Uri.parse(url), body: body, headers: headers);
       if (response.statusCode == 200) {
         log("Item removed from cart");
+      } else if (response.statusCode >= 401 && response.statusCode <= 403) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.clear();
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => LoginUserScreen(),
+            ),
+            (route) => false);
+        showSnackBar(context, "Please Login Again");
       } else {
         log("something went wrong");
       }

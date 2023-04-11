@@ -1,6 +1,7 @@
 import 'package:eaglone/model/Product%20Model/paidcourse_model.dart';
 import 'package:eaglone/Repositories/free_courses.dart';
 import 'package:eaglone/Repositories/paid_courses.dart';
+import 'package:eaglone/view/Home%20Screen/your_courses.dart';
 import 'package:eaglone/view/const.dart';
 import 'package:eaglone/view/widgets/common_widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -112,10 +113,10 @@ class _AllCourseState extends State<AllCourse> {
                 kheight10,
                 kheigh20,
                 FutureBuilder(
-                    future: PaidCourses.getCourses(),
+                    future: PaidCourses.getCourses(context),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return allCourseLoading;
+                        return allCourseLoading();
                       } else if (snapshot.hasData && snapshot.data != null) {
                         var data = snapshot.data!;
                         return GridView.builder(

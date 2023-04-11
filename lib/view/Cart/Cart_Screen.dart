@@ -19,6 +19,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:marquee/marquee.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -97,6 +98,7 @@ class _CartScreenState extends State<CartScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    bool fetched = false;
     return Scaffold(
       body: SafeArea(
           child: Column(
@@ -140,7 +142,7 @@ class _CartScreenState extends State<CartScreen> {
                 future: CartRepository.getCart(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CupertinoActivityIndicator();
+                    return LoadingCart();
                   } else if (snapshot.hasData && snapshot.data != null) {
                     var data = snapshot.data!;
 
@@ -172,15 +174,17 @@ class _CartScreenState extends State<CartScreen> {
                 future: CartRepository.getCart(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Text(
+                    return hell; /* Text(
                       "Fetching your cart",
                       style: GoogleFonts.poppins(
                           textStyle: TextStyle(
                               color: themeGreen,
                               fontSize: 25.sp,
                               fontWeight: FontWeight.w500)),
-                    );
+                    ); */
                   } else if (snapshot.hasData && snapshot.data != null) {
+                    fetched = true;
+
                     var data = snapshot.data!;
                     int price = 0;
                     int discount = 0;
@@ -256,6 +260,36 @@ class _CartScreenState extends State<CartScreen> {
                             ),
                           ],
                         ),
+                        kheigh20,
+                        Center(
+                          child: GestureDetector(
+                              onTap: () {
+                                paymentFunction(amount: pricetotal);
+                              },
+                              child: Container(
+                                height: 50.h,
+                                width: 375.w,
+                                decoration: BoxDecoration(
+                                    color: themeGreen,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: Text(
+                                      "Checkout",
+                                      style: GoogleFonts.poppins(
+                                        textStyle: TextStyle(
+                                          color: kwhite,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 20.sp,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )),
+                        ),
+                        kheigh20
                       ],
                     );
                   } else {
@@ -270,39 +304,6 @@ class _CartScreenState extends State<CartScreen> {
                   }
                 }),
           ),
-          kheigh20,
-          GestureDetector(
-            onTap: () {
-              paymentFunction(amount: pricetotal);
-              /* Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PaymentScreen(),
-                  )); */
-            },
-            child: Container(
-              height: 50.h,
-              width: 375.w,
-              decoration: BoxDecoration(
-                  color: themeGreen, borderRadius: BorderRadius.circular(10)),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Text(
-                    "Checkout",
-                    style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                        color: kwhite,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20.sp,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          kheigh20
         ],
       )),
     );
@@ -364,8 +365,9 @@ class _CartScreenState extends State<CartScreen> {
                             onPressed: () async {
                               /*   SharedPreferences prefs =
                                   await SharedPreferences.getInstance(); */
-                              await CartRepository.deleteCart(
-                                  courseid: data.data[index].id);
+                              CartRepository.deleteCart(
+                                  courseid: data.data[index].id,
+                                  context: context);
                               setState(() {});
                             },
                             icon: const Icon(Icons.delete_outline))
@@ -397,5 +399,38 @@ class _CartScreenState extends State<CartScreen> {
         },
       );
     } */
+  }
+}
+
+class LoadingCart extends StatelessWidget {
+  const LoadingCart({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
+        child: ListView.builder(
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: 400.w,
+                height: 150,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: kblack,
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 }

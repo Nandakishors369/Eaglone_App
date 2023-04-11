@@ -50,7 +50,6 @@ class Datum {
     required this.views,
     required this.category,
     required this.premium,
-    required this.rating,
     required this.v,
     this.price,
     this.percentage,
@@ -66,7 +65,6 @@ class Datum {
   int views;
   String category;
   bool premium;
-  int rating;
   int v;
   int? price;
   int? percentage;
@@ -82,7 +80,6 @@ class Datum {
         views: json["views"],
         category: json["category"],
         premium: json["premium"],
-        rating: json["rating"],
         v: json["__v"],
         price: json["price"],
         percentage: json["percentage"],
@@ -99,7 +96,6 @@ class Datum {
         "views": views,
         "category": category,
         "premium": premium,
-        "rating": rating,
         "__v": v,
         "price": price,
         "percentage": percentage,

@@ -1,35 +1,35 @@
 import 'dart:developer';
-import 'package:eaglone/Repositories/error.dart';
 import 'package:eaglone/view/Login%20and%20Signup/loginuser.dart';
 import 'package:eaglone/view/utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:eaglone/view/api_keys.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../view/api_keys.dart';
-
-class Purchased {
-  static Future getCourses(BuildContext context) async {
+class Password {
+  static Future<bool> resetPass(
+      {required String password, required BuildContext context}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.get('token');
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token.toString());
     String userid = decodedToken['_id'];
-    String url =
-        "https://eaglone-api.onrender.com/get-purchased-courses?userId=$userid";
+    String url = "https://eaglone-api.onrender.com/reset-password";
     log(token.toString());
     log(userid);
     Map<String, String> headers = {
       "apikey": "cart $api_key",
       "authorization": "cart $token"
     };
-    log("its happening");
+    var body = {
+      "tokenValue":
+          "ac9bde3edc82eaaec22a488768afd48dcb9fdec37422b20a1a932487c5edacd8",
+      "newPassword": "ajmal"
+    };
     http.Response response;
-    response = await http.get(Uri.parse(url), headers: headers);
-    log("Fetching historyyyyyy");
+    response = await http.post(Uri.parse(url), body: body, headers: headers);
+    log(response.body);
     if (response.statusCode == 200) {
-      log("fetched successfully");
-    } else if (response.statusCode >= 401 && response.statusCode <= 403) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.clear();
       Navigator.pushAndRemoveUntil(
@@ -38,11 +38,11 @@ class Purchased {
             builder: (context) => LoginUserScreen(),
           ),
           (route) => false);
-      showSnackBar(context, "Please Login Again");
+      showSnackBar(context, "Please Login With Your New Password");
+      return true;
     } else {
-      errorHandler(statusCode: response.statusCode);
+      log("something went wrong");
+      return false;
     }
-    /* log(response.statusCode.toString());
-    log(response.statusCode.toString()); */
   }
 }

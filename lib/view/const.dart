@@ -43,25 +43,36 @@ const COLLECTION = "products";
 Size size = const Size(423.5, 941.1);
 
 //loading
-var allCourseLoading = Shimmer.fromColors(
-    baseColor: Colors.grey[300]!,
-    highlightColor: Colors.grey[100]!,
-    child: GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: 10,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, crossAxisSpacing: 20, mainAxisSpacing: 20),
-      itemBuilder: (context, index) {
-        return Container(
-          height: 100.h,
-          width: 190.w,
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-        );
-      },
-    ));
+
+class allCourseLoading extends StatelessWidget {
+  const allCourseLoading({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
+        child: GridView.builder(
+          shrinkWrap: true,
+          itemCount: 10,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, crossAxisSpacing: 20, mainAxisSpacing: 20),
+          itemBuilder: (context, index) {
+            return Container(
+              height: 100.h,
+              width: 190.w,
+              decoration: BoxDecoration(
+                color: kblack,
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+            );
+          },
+        ));
+  }
+}
+
 var loadinPaidCourse = Shimmer.fromColors(
   child: Column(
     children: [
@@ -149,3 +160,130 @@ loadingFeatured() {
     ),
   );
 }
+
+var hell = Shimmer.fromColors(
+  baseColor: Colors.grey[300]!,
+  highlightColor: Colors.grey[100]!,
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      kheight5,
+      /*  Container(
+        height: 20,
+        width: 60,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: kblack,
+        ),
+      ), */
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: kblack,
+              ),
+              height: 20,
+              width: 60,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: kblack,
+              ),
+              height: 20,
+              width: 60,
+            ),
+          ),
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: kblack,
+              ),
+              height: 20,
+              width: 60,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: kblack,
+              ),
+              height: 20,
+              width: 60,
+            ),
+          ),
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: kblack,
+              ),
+              height: 20,
+              width: 60,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: kblack,
+              ),
+              height: 20,
+              width: 60,
+            ),
+          ),
+        ],
+      ),
+      kheigh20,
+      Center(
+        child: GestureDetector(
+            onTap: () {},
+            child: Container(
+              height: 50.h,
+              width: 375.w,
+              decoration: BoxDecoration(
+                  color: kblack, borderRadius: BorderRadius.circular(10)),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Text(
+                    "Checkout",
+                    style: GoogleFonts.poppins(
+                      textStyle: TextStyle(
+                        color: kwhite,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20.sp,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )),
+      ),
+      kheigh20
+    ],
+  ),
+);

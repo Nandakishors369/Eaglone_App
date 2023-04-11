@@ -44,9 +44,12 @@ class Datum {
     required this.description,
     required this.classes,
     required this.views,
+    required this.price,
+    required this.percentage,
+    required this.ourPrice,
     required this.category,
     required this.premium,
-    required this.rating,
+    this.rating,
     required this.v,
   });
 
@@ -57,9 +60,12 @@ class Datum {
   String description;
   int classes;
   int views;
+  int price;
+  int percentage;
+  int ourPrice;
   String category;
   bool premium;
-  int rating;
+  int? rating;
   int v;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -70,6 +76,9 @@ class Datum {
         description: json["description"],
         classes: json["classes"],
         views: json["views"],
+        price: json["price"],
+        percentage: json["percentage"],
+        ourPrice: json["ourPrice"],
         category: json["category"],
         premium: json["premium"],
         rating: json["rating"],
@@ -84,6 +93,9 @@ class Datum {
         "description": description,
         "classes": classes,
         "views": views,
+        "price": price,
+        "percentage": percentage,
+        "ourPrice": ourPrice,
         "category": category,
         "premium": premium,
         "rating": rating,

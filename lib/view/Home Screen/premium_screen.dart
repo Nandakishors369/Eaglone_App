@@ -1,5 +1,6 @@
 import 'package:eaglone/Repositories/all_courses.dart';
 import 'package:eaglone/model/Product%20Model/All%20Course%20Model/allcourse_model.dart';
+import 'package:eaglone/view/Home%20Screen/your_courses.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/allcourse_screen.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/paidcourse_screen,.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/produc_screen.dart';
@@ -59,7 +60,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
               child: customSearch(),
             ),
             kheight10,
-            Padding(
+            /* Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 height: 35.h,
@@ -82,23 +83,23 @@ class _PremiumScreenState extends State<PremiumScreen> {
                   },
                 ),
               ),
-            ),
+            ), */
             /*   SizedBox(
                   height: 200.h,
                 ),
                 Lottie.asset("assets/not_found.json") */
             FutureBuilder(
-                future: AllCourses.getCourses(),
+                future: AllCourses.getCourses(context),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CupertinoActivityIndicator();
+                    return LoadingGrid();
                   } else if (snapshot.hasData && snapshot.data != null) {
                     var data = snapshot.data;
                     return GridView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2),
+                          childAspectRatio: 190.w / 208.h, crossAxisCount: 2),
                       itemCount: data!.data.length,
                       itemBuilder: (context, index) {
                         return Padding(
@@ -109,11 +110,14 @@ class _PremiumScreenState extends State<PremiumScreen> {
                                 price:
                                     data.data[index].price.toString() == "null"
                                         ? "Free"
-                                        : data.data[index].price.toString()));
+                                        : "${data.data[index].price}/-"));
                       },
                     );
                   } else {
-                    return Text("Something Went Wrong");
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Lottie.asset("assets/errorLottie.json"),
+                    );
                   }
                 })
           ],

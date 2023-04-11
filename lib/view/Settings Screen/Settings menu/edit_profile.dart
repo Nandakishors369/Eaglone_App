@@ -1,3 +1,5 @@
+import 'package:eaglone/Repositories/password.dart';
+import 'package:eaglone/view/Login%20and%20Signup/signup_screen.dart';
 import 'package:eaglone/view/const.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,12 +13,14 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
+  TextEditingController _passController = TextEditingController();
+  TextEditingController _cpassController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    bool _obscureText = true;
+    bool status;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -36,8 +40,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         },
                         child: Icon(Iconsax.arrow_left)),
                     Text(
-                      "Edit Profile",
-                      style: GoogleFonts.montserrat(
+                      "Reset Password",
+                      style: GoogleFonts.poppins(
                           textStyle: TextStyle(
                               fontSize: 20.sp, fontWeight: FontWeight.w500)),
                     ),
@@ -51,15 +55,31 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               kheigh20,
               kheigh20,
               Text(
-                'Name',
+                'Password',
                 style: TextStyle(fontSize: 16, color: Colors.grey[600]),
               ),
               SizedBox(height: 10),
               TextField(
-                controller: _nameController,
+                obscureText: _obscureText,
+                controller: _passController,
                 decoration: InputDecoration(
-                  hintText: 'Enter your name',
+                  hintText: 'Enter your Password',
                   filled: true,
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        if (_obscureText == true) {
+                          _obscureText = false;
+                        } else {
+                          _obscureText = true;
+                        }
+                      });
+                    },
+                    icon: Icon(
+                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                      color: Colors.grey,
+                    ),
+                  ),
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -69,16 +89,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
               SizedBox(height: 20),
               Text(
-                'Phone Number',
+                'Confirm Password',
                 style: TextStyle(fontSize: 16, color: Colors.grey[600]),
               ),
               SizedBox(height: 10),
               TextField(
-                controller: _phoneController,
+                obscureText: _obscureText,
+                controller: _cpassController,
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
-                  hintText: 'Enter your phone number',
+                  hintText: 'Enter your Password',
                   filled: true,
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        if (_obscureText == true) {
+                          _obscureText = false;
+                        } else {
+                          _obscureText = true;
+                        }
+                      });
+                    },
+                    icon: Icon(
+                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                      color: Colors.grey,
+                    ),
+                  ),
                   fillColor: Colors.grey[200],
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -87,30 +123,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
               ),
               SizedBox(height: 20),
-              Text(
-                'Email',
-                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-              ),
-              SizedBox(height: 10),
-              TextField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  hintText: 'Enter your email',
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
               SizedBox(height: 40),
               Container(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Save Changes'),
+                  onPressed: () async {
+                    status = await Password.resetPass(
+                        password: cpasswordController.text, context: context);
+                  },
+                  child: Text('Change Password'),
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(vertical: 15),
                     shape: RoundedRectangleBorder(

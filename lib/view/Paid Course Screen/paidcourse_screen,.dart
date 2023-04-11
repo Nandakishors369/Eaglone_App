@@ -25,6 +25,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PaidCourseScreen extends StatefulWidget {
@@ -53,12 +54,12 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
                   children: [
                     GestureDetector(
                         onTap: () async {
-                          SharedPreferences prefs =
+                          /*  SharedPreferences prefs =
                               await SharedPreferences.getInstance();
                           var token = prefs.get('token');
                           Map<String, dynamic> decodedToken =
                               JwtDecoder.decode(token.toString());
-                          log(decodedToken.toString());
+                          log(decodedToken.toString()); */
                         },
                         child: Icon(Iconsax.notification_bing)),
                     Text(
@@ -144,7 +145,7 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
               kheigh20,
               kheight10,
               FutureBuilder(
-                  future: PaidCourses.getCourses(),
+                  future: PaidCourses.getCourses(context),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return loadinPaidCourse; /* Center(
@@ -227,8 +228,10 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
                         ],
                       );
                     } else {
-                      return appHeadings(
-                          content: "Failed to fetch the courses");
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Lottie.asset("assets/errorLottie.json"),
+                      );
                     }
                   })
             ],

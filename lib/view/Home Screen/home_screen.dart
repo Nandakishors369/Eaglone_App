@@ -31,6 +31,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -45,119 +46,171 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: kwhite,
+        // backgroundColor: kwhite,
         body: SlidingUpPanel(
-          backdropEnabled: true,
-          color: Colors.transparent,
-          minHeight: 335.h,
-          maxHeight: 470.h,
-          panel: Container(
-            decoration: BoxDecoration(
-                color: kwhite, borderRadius: BorderRadius.circular(20.r)),
-            child: FutureBuilder(
-              future: freeCourses.getProducts(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                      child: Lottie.asset("assets/vTSLp13quf.json", height: 200)
-
-                      /* Text(
-                      "Getting your courses..!",
-                      style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
-                          color: kblack,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 30.sp,
-                        ),
-                      ),
-                    ), */
-                      );
-                } else if (snapshot.hasData && snapshot.data != null) {
-                  FreeProductModel data = snapshot.data!;
-                  return Column(
-                    children: [
-                      kheight10,
-                      DragIndicator(),
-                      kheigh20,
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            stacks(context,
-                                name: data.data[0].title,
-                                color: kblue,
-                                data: data,
-                                index: 0),
-                            stacks(context,
-                                name: data.data[1].title,
-                                color: kyellow,
-                                data: data,
-                                index: 1)
-                          ],
-                        ),
-                      ),
-                      kheigh20,
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            stacks(context,
-                                name: data.data[2].title,
-                                color: kdgrey,
-                                data: data,
-                                index: 2),
-                            stacks(context,
-                                name: data.data[3].title,
-                                color: kdblue,
-                                data: data,
-                                index: 3)
-                          ],
-                        ),
-                      ),
-                      kheigh20,
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DSearchScreen(),
-                              ));
-                        },
-                        child: Container(
-                          height: 60.h,
-                          width: 340.w,
-                          decoration: BoxDecoration(
-                              color: themeGreen,
-                              borderRadius: BorderRadius.circular(15.r)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Center(
-                              child: Text(
-                                "Explore All Courses",
-                                style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                    color: kwhite,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 25.sp,
-                                  ),
-                                ),
+      backdropEnabled: true,
+      color: Colors.transparent,
+      minHeight: 335.h,
+      maxHeight: 470.h,
+      panel: Container(
+        decoration: BoxDecoration(
+            color: kwhite, borderRadius: BorderRadius.circular(20.r)),
+        child: FutureBuilder(
+          future: freeCourses.getProducts(context),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return LoadinHomeStack();
+            } else if (snapshot.hasData && snapshot.data != null) {
+              FreeProductModel data = snapshot.data!;
+              return Column(
+                children: [
+                  kheight10,
+                  DragIndicator(),
+                  kheigh20,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        stacks(context,
+                            name: data.data[0].title,
+                            color: kblue,
+                            data: data,
+                            index: 0),
+                        stacks(context,
+                            name: data.data[1].title,
+                            color: kyellow,
+                            data: data,
+                            index: 1)
+                      ],
+                    ),
+                  ),
+                  kheigh20,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        stacks(context,
+                            name: data.data[2].title,
+                            color: kdgrey,
+                            data: data,
+                            index: 2),
+                        stacks(context,
+                            name: data.data[3].title,
+                            color: kdblue,
+                            data: data,
+                            index: 3)
+                      ],
+                    ),
+                  ),
+                  kheigh20,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DSearchScreen(),
+                          ));
+                    },
+                    child: Container(
+                      height: 60.h,
+                      width: 340.w,
+                      decoration: BoxDecoration(
+                          color: themeGreen,
+                          borderRadius: BorderRadius.circular(15.r)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: Text(
+                            "Explore All Courses",
+                            style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                color: kwhite,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 25.sp,
                               ),
                             ),
                           ),
                         ),
-                      )
-                    ],
-                  );
-                } else {
-                  return Text("Something Went Wrong");
-                }
-              },
-            ),
+                      ),
+                    ),
+                  )
+                ],
+              );
+            } else {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Lottie.asset("assets/errorLottie.json"),
+              );
+            }
+          },
+        ),
+      ),
+      body: HomeBody(),
+    ));
+  }
+
+  Column LoadinHomeStack() {
+    return Column(
+      children: [
+        kheight10,
+        DragIndicator(),
+        kheigh20,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              LoadingStack(),
+              LoadingStack(),
+            ],
           ),
-          body: HomeBody(),
-        ));
+        ),
+        kheigh20,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              LoadingStack(),
+              LoadingStack(),
+            ],
+          ),
+        ),
+        kheigh20,
+        Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Container(
+            height: 60.h,
+            width: 340.w,
+            decoration: BoxDecoration(
+                color: kblack, borderRadius: BorderRadius.circular(15.r)),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class LoadingStack extends StatelessWidget {
+  const LoadingStack({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Container(
+        decoration: BoxDecoration(
+            color: kblack, borderRadius: BorderRadius.circular(10.r)),
+        height: 124.h,
+        width: 190.w,
+      ),
+    );
   }
 }
 
@@ -210,7 +263,7 @@ class _HomeBodyState extends State<HomeBody> {
               GestureDetector(
                 onTap: () async {
                   FreeCourses freeCourses = FreeCourses();
-                  await freeCourses.getProducts();
+                  await freeCourses.getProducts(context);
                   /*   SharedPreferences prefs =
                       await SharedPreferences.getInstance();
                   prefs.getString("token");
@@ -424,6 +477,8 @@ class DragIndicator extends StatelessWidget {
     );
   }
 }
+
+
 
 
 // Container(

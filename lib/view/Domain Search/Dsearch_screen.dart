@@ -32,7 +32,7 @@ class _DSearchScreenState extends State<DSearchScreen> {
               ),
               kheight10,
               FutureBuilder(
-                future: freeCourses.getProducts(),
+                future: freeCourses.getProducts(context),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Lottie.asset("assets/not_found.json");

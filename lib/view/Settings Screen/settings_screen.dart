@@ -7,12 +7,14 @@ import 'package:eaglone/view/Login%20and%20Signup/login_screen.dart';
 import 'package:eaglone/view/Login%20and%20Signup/user_auth.dart';
 import 'package:eaglone/view/Settings%20Screen/Settings%20menu/edit_profile.dart';
 import 'package:eaglone/view/Settings%20Screen/Settings%20menu/profile_screen.dart';
+import 'package:eaglone/view/Settings%20Screen/Settings%20menu/settingpop.dart';
 import 'package:eaglone/view/const.dart';
 import 'package:eaglone/view/widgets/common_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -48,13 +50,52 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     },
                   ));
                 },
-                child: headingss(heading: "Edit Profile")),
+                child: headingss(heading: "Reset Password")),
             kheigh20,
-            headingss(heading: "Course History"),
+            GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return settingmenupopup(
+                          mdFilename: "termsandcondition.md");
+                    },
+                  );
+                },
+                child: headingss(heading: "Terms and Conditions")),
             kheigh20,
-            headingss(heading: "Order History"),
+            GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return settingmenupopup(mdFilename: "privacy.md");
+                    },
+                  );
+                },
+                child: headingss(heading: "Privacy Policy")),
             kheigh20,
-            headingss(heading: "App Settings"),
+            headingss(heading: "Share the app"),
+            kheigh20,
+            GestureDetector(
+                onTap: () {
+                  showAboutDialog(
+                      context: context,
+                      applicationIcon: Image.asset(
+                        "assets/logo512.png",
+                        height: 50,
+                        width: 50,
+                      ),
+                      applicationName: "Eaglone",
+                      applicationVersion: "1.0.0",
+                      children: [
+                        Text(
+                          "Eaglone is a user-friendly tech learning platform developed by Nandakishor using Flutter. It offers personalized courses, tutorials, and resources on various tech topics, such as programming, web development, data science, and more. The courses are created by experts and include video lectures, quizzes, and hands-on projects. Eaglone also provides a community forum where learners can connect, collaborate, and ask questions.",
+                          style: GoogleFonts.poppins(),
+                        ),
+                      ]);
+                },
+                child: headingss(heading: "About the app")),
             kheigh20,
             InkWell(
                 onTap: () {
