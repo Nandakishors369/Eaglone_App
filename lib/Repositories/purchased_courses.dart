@@ -15,8 +15,7 @@ class Purchased {
     var token = prefs.get('token');
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token.toString());
     String userid = decodedToken['_id'];
-    String url =
-        "https://eaglone-api.onrender.com/get-purchased-courses?userId=$userid";
+    String url = "$baseUrl/get-purchased-courses?userId=$userid";
     log(token.toString());
     log(userid);
     Map<String, String> headers = {

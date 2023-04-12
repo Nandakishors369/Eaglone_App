@@ -2,7 +2,7 @@ import 'package:eaglone/view/Home%20Screen/home_screen.dart';
 import 'package:eaglone/view/Navigation/tabbar.dart';
 import 'package:eaglone/view/News%20Screen/news_screen.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/paidcourse_screen,.dart';
-import 'package:eaglone/view/Search%20Screen/search_screen.dart';
+import 'package:eaglone/view/Memebership/search_screen.dart';
 import 'package:eaglone/view/Settings%20Screen/settings_screen.dart';
 import 'package:eaglone/view/Splash%20Screens/splash_screen.dart';
 import 'package:eaglone/view/animations/list_animation.dart';

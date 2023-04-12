@@ -17,7 +17,7 @@ class HistoryCourse {
     var token = prefs.get('token');
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token.toString());
     String userid = decodedToken['_id'];
-    String url = "https://eaglone-api.onrender.com/get-orders?userId=$userid";
+    String url = "$baseUrl/get-orders?userId=$userid";
     log(token.toString());
     log(userid);
     Map<String, String> headers = {

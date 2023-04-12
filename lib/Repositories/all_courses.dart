@@ -14,8 +14,7 @@ class AllCourses {
   static Future<AllCoursePageModel?> getCourses(BuildContext context) async {
     int count = 3;
     int limit = 3;
-    String url =
-        "https://eaglone-api.onrender.com/courses?page=$count&limit=$limit";
+    String url = "$baseUrl/courses?page=$count&limit=$limit";
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.get('token');
     // Map<String, dynamic> decodedToken = JwtDecoder.decode(token.toString());

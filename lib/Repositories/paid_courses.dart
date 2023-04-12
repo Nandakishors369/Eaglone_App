@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:eaglone/model/Product%20Model/paidcourse_model.dart';
 import 'package:eaglone/model/search_model.dart';
 import 'package:eaglone/view/Login%20and%20Signup/loginuser.dart';
+import 'package:eaglone/view/api_keys.dart';
 import 'package:eaglone/view/utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -14,11 +15,8 @@ final client = http.Client();
 class PaidCourses {
   static Future<PaidCourseModel?> getCourses(BuildContext context) async {
     log("Starting to fetch paid courses");
-    String url = "https://eaglone-api.onrender.com/paid-courses";
-    Map<String, String> headers = {
-      "apikey":
-          "paidcourse \$2b\$14\$Spul3qDosNUGfGA.AnYWl.W1DH4W4AnQsFrNVEKJi6.CsbgncfCUi"
-    };
+    String url = "$baseUrl/paid-courses";
+    Map<String, String> headers = {"apikey": "paidcourse $api_key"};
     String? query = null;
     final response = await client.get(Uri.parse(url), headers: headers);
     log(response.body);

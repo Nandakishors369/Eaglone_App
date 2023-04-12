@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:eaglone/Repositories/error.dart';
 import 'package:eaglone/model/Product%20Model/freecourse_model.dart';
 import 'package:eaglone/view/Login%20and%20Signup/loginuser.dart';
+import 'package:eaglone/view/api_keys.dart';
 import 'package:eaglone/view/utils/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -15,11 +16,8 @@ class FreeCourses {
 
   Future<FreeProductModel?> getProducts(BuildContext context) async {
     log("Starting to fetch free courses");
-    String url = "https://eaglone-api.onrender.com/free-courses";
-    Map<String, String> headers = {
-      "apikey":
-          "bearer \$2b\$14\$Spul3qDosNUGfGA.AnYWl.W1DH4W4AnQsFrNVEKJi6.CsbgncfCUi"
-    };
+    String url = "$baseUrl/free-courses";
+    Map<String, String> headers = {"apikey": "bearer $api_key"};
     http.Response response;
 
     try {

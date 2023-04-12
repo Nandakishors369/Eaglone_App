@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:eaglone/model/Authentication%20Model/loginuser_model.dart';
 import 'package:eaglone/model/Authentication%20Model/signup_data.dart';
+import 'package:eaglone/view/api_keys.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,13 +15,12 @@ class UserAuth {
   bool gotToken = false;
   bool loginStatus = false;
 
-  String baseUrl = "https://eaglone-api.onrender.com/user-signup";
-
   Future<SignupResponse?> signup(
       {required String name,
       required String email,
       required String mobile,
       required String password}) async {
+    String Url = "$baseUrl/user-signup";
     try {
       final body = {
         "email": email,
@@ -28,11 +28,8 @@ class UserAuth {
         "mobile": mobile,
         "name": name
       };
-      Map<String, String> headers = {
-        "apikey":
-            "bearer \$2b\$14\$Spul3qDosNUGfGA.AnYWl.W1DH4W4AnQsFrNVEKJi6.CsbgncfCUi"
-      };
-      final url = Uri.parse(baseUrl);
+      Map<String, String> headers = {"apikey": "bearer $api_key"};
+      final url = Uri.parse(Url);
       http.Response response;
       log("Signup Started");
       response = await http.post(url, body: body, headers: headers);
@@ -58,14 +55,11 @@ class UserAuth {
 
   Future verifyOtp({required String email, required String otp}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String verifyUrl = "https://eaglone-api.onrender.com/verify-email";
+    String verifyUrl = "$baseUrl/verify-email";
     final url = Uri.parse(verifyUrl);
     final body = {"email": email, "otp": otp};
 
-    Map<String, String> headers = {
-      "apikey":
-          "verifyOtp \$2b\$14\$Spul3qDosNUGfGA.AnYWl.W1DH4W4AnQsFrNVEKJi6.CsbgncfCUi"
-    };
+    Map<String, String> headers = {"apikey": "verifyOtp $api_key"};
     try {
       http.Response response;
       response = await http.post(url, body: body, headers: headers);
@@ -94,17 +88,13 @@ class UserAuth {
   }
 
   Future loginUser({required String email, required String password}) async {
-    String baseUrl = "https://eaglone-api.onrender.com/user-login";
-    Map<String, String> headers = {
-      "apikey":
-          "loginUser \$2b\$14\$Spul3qDosNUGfGA.AnYWl.W1DH4W4AnQsFrNVEKJi6.CsbgncfCUi"
-    };
+    String Url = "$baseUrl/user-login";
+    Map<String, String> headers = {"apikey": "loginUser $api_key"};
     var body = {"email": email, "password": password};
     http.Response response;
     log("login started");
     try {
-      response =
-          await http.post(Uri.parse(baseUrl), body: body, headers: headers);
+      response = await http.post(Uri.parse(Url), body: body, headers: headers);
       log(response.body);
       var data = jsonDecode(response.body);
       // LoginResponse loginResponse = LoginResponse.fromJson(jsonDecode(response.body));

@@ -15,7 +15,7 @@ class Checkout {
   static bool orderPlaced = false;
   static Future placeOrder(
       {required String? transactionId, required BuildContext context}) async {
-    String url = "https://eaglone-api.onrender.com/create-order";
+    String url = "$baseUrl/create-order";
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.get('token');
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token.toString());

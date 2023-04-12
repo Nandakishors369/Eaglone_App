@@ -33,6 +33,7 @@ dependencies:
   animations: ^2.0.7
   carousel_slider: ^4.2.1
   cloud_firestore: 
+  connectivity_plus: ^3.0.4
   cupertino_icons: ^1.0.2
   easy_splash_screen: 
   email_validator: ^2.1.17
@@ -50,6 +51,7 @@ dependencies:
   google_sign_in: ^5.4.2
   http: ^0.13.5
   iconsax: ^0.0.8
+  internet_connection_checker: ^1.0.0+1
   jwt_decoder: ^2.0.1
   lottie: 
   marquee: ^2.2.3

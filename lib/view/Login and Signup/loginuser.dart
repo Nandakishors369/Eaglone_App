@@ -5,6 +5,7 @@ import 'package:eaglone/view/Login%20and%20Signup/login_screen.dart';
 import 'package:eaglone/view/Navigation/navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginUserScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
   UserAuth userAuth = UserAuth();
 
   bool auth = false;
+  late bool hasCon;
 
   Future checkLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -30,9 +32,16 @@ class _LoginUserScreenState extends State<LoginUserScreen> {
     return auth;
   }
 
+  /*  Future checkInte() async {
+    bool hasCon = await InternetConnectionChecker().hasConnection;
+    setState(() {});
+  } */
+
   @override
   void initState() {
+    /*  checkInte(); */
     checkLogin();
+
     super.initState();
   }
 

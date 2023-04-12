@@ -20,7 +20,7 @@ class CartRepository {
       required BuildContext context}) async {
     log("adding to cart");
 
-    String url = "https://eaglone-api.onrender.com/add-to-cart";
+    String url = "$baseUrl/add-to-cart";
     Map<String, String> headers = {
       "apikey": "cart $api_key",
       "authorization": "cart $token"
@@ -58,7 +58,7 @@ class CartRepository {
     var token = prefs.get('token');
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token.toString());
     String userid = decodedToken['_id'];
-    String url = "https://eaglone-api.onrender.com/get-cart?userId=$userid";
+    String url = "$baseUrl/get-cart?userId=$userid";
     log(token.toString());
     log(userid);
     Map<String, String> headers = {
@@ -87,7 +87,7 @@ class CartRepository {
     var token = prefs.get('token');
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token.toString());
     String userid = decodedToken['_id'];
-    String url = "https://eaglone-api.onrender.com/remove-from-cart";
+    String url = "$baseUrl/remove-from-cart";
     Map<String, String> headers = {
       "apikey": "cart $api_key",
       "authorization": "cart $token"

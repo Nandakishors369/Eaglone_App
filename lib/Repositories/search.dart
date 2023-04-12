@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 class Search {
   static Future<SearchModel?> searchCourses({required String query}) async {
-    String url = "https://eaglone-api.onrender.com/search/$query";
+    String url = "$baseUrl/search/$query";
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.get('token');
     // Map<String, dynamic> decodedToken = JwtDecoder.decode(token.toString());

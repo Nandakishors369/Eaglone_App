@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:eaglone/Repositories/error.dart';
 import 'package:eaglone/view/Login%20and%20Signup/loginuser.dart';
 import 'package:eaglone/view/utils/snackbar.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class Password {
     var token = prefs.get('token');
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token.toString());
     String userid = decodedToken['_id'];
-    String url = "https://eaglone-api.onrender.com/reset-password";
+    String url = "$baseUrl/reset-password";
     log(token.toString());
     log(userid);
     Map<String, String> headers = {
@@ -42,6 +43,24 @@ class Password {
       return true;
     } else {
       log("something went wrong");
+      return false;
+    }
+  }
+
+  static Future forgotPassword({required String email}) async {
+    Map<String, String> headers = {
+      "apikey": "forgotpass $api_key",
+    };
+    var body = {"email": email};
+    String url = "$baseUrl/forgot-password";
+    http.Response response;
+    response = await http.post(Uri.parse(url), headers: headers, body: body);
+    if (response.statusCode == 200) {
+      log("Successfully sent");
+      return true;
+    } else {
+      log("Something wrong while forgot password");
+      errorHandler(statusCode: response.statusCode);
       return false;
     }
   }

@@ -1,8 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:eaglone/Repositories/password.dart';
 import 'package:eaglone/Repositories/user_authenticaton.dart';
 import 'package:eaglone/view/Login%20and%20Signup/google_login.dart';
 import 'package:eaglone/view/Login%20and%20Signup/signup_screen.dart';
 import 'package:eaglone/view/Navigation/navigation_bar.dart';
 import 'package:eaglone/view/const.dart';
+import 'package:eaglone/view/utils/snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +73,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         TextButton(
-                          onPressed: () async {},
+                          onPressed: () async {
+                            forgotPassword();
+                          },
                           child: Text(
                             "Forgot Password ?",
                             style: GoogleFonts.karla(
@@ -106,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: themeGreen),
                         child: _isLoading
-                            ? CupertinoActivityIndicator()
+                            ? const CupertinoActivityIndicator()
                             : Text(
                                 "Continue",
                                 style: GoogleFonts.poppins(),
@@ -118,13 +124,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Don't Have An Account ?"),
+                          const Text("Don't Have An Account ?"),
                           TextButton(
                             onPressed: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => SignupScreen(),
+                                    builder: (context) => const SignupScreen(),
                                   ));
                             },
                             child: Text(
@@ -143,6 +149,50 @@ class _LoginScreenState extends State<LoginScreen> {
             }),
       )),
     );
+  }
+
+  forgotPassword() async {
+    if (lemailController.text.isEmpty) {
+      showSnackBar(context, "Please enter your email address");
+    } else {
+      showSnackBar(context, "Please wait");
+      bool status = await Password.forgotPassword(email: lemailController.text);
+      if (status == true) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text("Reset Password"),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("Ok"))
+              ],
+              content: const Text("Reset Link Has Been Sent To the Email"),
+            );
+          },
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text("Reset Password"),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("Ok"))
+              ],
+              content: const Text("Something went wrong please try again"),
+            );
+          },
+        );
+      }
+    }
   }
 
   Future loginUser(
@@ -171,7 +221,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );
@@ -231,7 +281,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           hintText: "$hint",
           hintStyle: GoogleFonts.karla(
-            textStyle: TextStyle(),
+            textStyle: const TextStyle(),
           ),
           focusColor: kblack,
           focusedBorder: OutlineInputBorder(

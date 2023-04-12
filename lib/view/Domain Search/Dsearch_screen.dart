@@ -1,4 +1,5 @@
 import 'package:eaglone/Repositories/free_courses.dart';
+import 'package:eaglone/view/Home%20Screen/your_courses.dart';
 import 'package:eaglone/view/const.dart';
 import 'package:eaglone/view/widgets/common_widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,7 +36,7 @@ class _DSearchScreenState extends State<DSearchScreen> {
                 future: freeCourses.getProducts(context),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Lottie.asset("assets/not_found.json");
+                    return LoadingGrid();
                   } else if (snapshot.hasData && snapshot.data != null) {
                     var data = snapshot.data!;
                     return ListView.separated(

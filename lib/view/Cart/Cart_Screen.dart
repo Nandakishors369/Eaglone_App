@@ -1,24 +1,16 @@
 import 'dart:developer';
-import 'dart:ui';
 
 import 'package:eaglone/Repositories/checkout.dart';
 import 'package:eaglone/model/Cart%20Model/cart_model.dart';
 import 'package:eaglone/Repositories/cart.dart';
-import 'package:eaglone/view/Payment%20and%20Confirmation/payment_screen.dart';
 import 'package:eaglone/view/const.dart';
-import 'package:eaglone/view/utils/snackbar.dart';
 import 'package:eaglone/view/widgets/common_widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:lottie/lottie.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:marquee/marquee.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CartScreen extends StatefulWidget {
@@ -160,8 +152,17 @@ class _CartScreenState extends State<CartScreen> {
                         return cartItems(data: data, index: index);
                       },
                     );
+                  } else if (snapshot.data!.data.isEmpty) {
+                    return Center(
+                      child: appHeadings(content: "Please Add Some Courses"),
+                    );
                   } else {
-                    return const Text("Please add products");
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Lottie.asset("assets/errorLottie.json"),
+                      ),
+                    );
                   }
                 }),
           ),
@@ -293,13 +294,15 @@ class _CartScreenState extends State<CartScreen> {
                       ],
                     );
                   } else {
-                    return Text(
-                      "price/-",
-                      style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              color: themeGreen,
-                              fontSize: 25.sp,
-                              fontWeight: FontWeight.w500)),
+                    return Center(
+                      child: Text(
+                        "No Course Found",
+                        style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                                color: themeGreen,
+                                fontSize: 25.sp,
+                                fontWeight: FontWeight.w500)),
+                      ),
                     );
                   }
                 }),

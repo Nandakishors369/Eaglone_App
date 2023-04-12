@@ -5,6 +5,7 @@ import 'package:eaglone/model/Product%20Model/paidcourse_model.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/produc_screen.dart';
 import 'package:eaglone/view/Paid%20Course%20Screen/product_search_screen.dart';
 import 'package:eaglone/view/const.dart';
+import 'package:eaglone/view/widgets/common_widgets.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,8 +26,9 @@ class SearchPaid extends SearchDelegate {
     IconButton(
         onPressed: () {
           query = "";
+          Navigator.pop(context);
         },
-        icon: Icon(Icons.close));
+        icon: Icon(Icons.arrow_back));
   }
 
   @override
@@ -38,7 +40,7 @@ class SearchPaid extends SearchDelegate {
             return Center(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Lottie.asset("assets/errorLottie.json"),
+                child: Lottie.asset("assets/eaglone_loading.json"),
               ),
             );
           } else if (snapshot.hasData) {
@@ -74,7 +76,12 @@ class SearchPaid extends SearchDelegate {
               },
             );
           } else {
-            return Center(child: Text("data"));
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Lottie.asset("assets/errorLottie.json"),
+              ),
+            );
           }
         });
   }
@@ -82,6 +89,6 @@ class SearchPaid extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     // TODO: implement buildSuggestions
-    return Center(child: Text("No data"));
+    return Center(child: appHeadings(content: "Search Your Course"));
   }
 }
