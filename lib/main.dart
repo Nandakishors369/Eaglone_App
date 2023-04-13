@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
               navigatorKey: navigatorKey,
               debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
+              title: 'Eaglone',
               theme: ThemeData(
                 primarySwatch: myThemeColor,
                 primaryColor: myThemeColor,

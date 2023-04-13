@@ -1,3 +1,6 @@
+import 'package:eaglone/Repositories/lessons.dart';
+import 'package:eaglone/model/Product%20Model/All%20Course%20Model/lesson_model.dart';
+import 'package:eaglone/model/free_courses.dart';
 import 'package:eaglone/view/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -8,8 +11,9 @@ import 'package:iconsax/iconsax.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoScreen extends StatefulWidget {
-  const VideoScreen({super.key});
-
+  VideoScreen({super.key, required this.video, required this.data});
+  String video;
+  LessonModel data;
   @override
   State<VideoScreen> createState() => _VideoScreenState();
 }
@@ -18,8 +22,7 @@ class _VideoScreenState extends State<VideoScreen> {
   late VideoPlayerController controller;
   bool playst = true;
   void playVideo() {
-    controller = VideoPlayerController.network(
-        "https://eaglone.s3.amazonaws.com/video-1679723325981-921038187.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIATTY3ZRDDST3IZ7LB%2F20230408%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230408T012044Z&X-Amz-Expires=900&X-Amz-Signature=6b2cd5e66c762dca0260f42defef7cad161bdb2bc7f84b6aab9f690126ba7c1f&X-Amz-SignedHeaders=host")
+    controller = VideoPlayerController.network(widget.video)
       ..addListener(() => setState(() {}))
       ..setLooping(true)
       ..initialize().then((value) => controller.play());
@@ -28,13 +31,8 @@ class _VideoScreenState extends State<VideoScreen> {
   @override
   void initState() {
     // TODO: implement initState
+    playVideo();
     super.initState();
-    controller = VideoPlayerController.network(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4')
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
-      });
   }
 
   @override
@@ -146,21 +144,21 @@ class _VideoScreenState extends State<VideoScreen> {
           Expanded(
             child: ListView.separated(
                 itemBuilder: (context, index) {
-                  return newsCard();
+                  return newsCard(widget.data, index);
                 },
                 separatorBuilder: (context, index) {
                   return SizedBox(
                     height: 10.h,
                   );
                 },
-                itemCount: 6),
+                itemCount: widget.data.data.length),
           )
         ],
       )),
     );
   }
 
-  Padding newsCard() {
+  Padding newsCard(LessonModel data, int index) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: GestureDetector(
@@ -189,9 +187,12 @@ class _VideoScreenState extends State<VideoScreen> {
                   children: [
                     kheigh20,
                     kheight10,
-                    Text(
-                      "hello",
-                      style: GoogleFonts.poppins(),
+                    SizedBox(
+                      width: 150.w,
+                      child: Text(
+                        data.data[index].title,
+                        style: GoogleFonts.poppins(),
+                      ),
                     ),
                   ],
                 )

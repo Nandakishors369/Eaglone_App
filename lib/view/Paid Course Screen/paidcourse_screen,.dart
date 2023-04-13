@@ -151,6 +151,7 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
                       return loadinPaidCourse; /* Center(
                           child: appHeadings(content: "Fetching you courses")); */
                     } else if (snapshot.hasData && snapshot.data != null) {
+                      log(snapshot.data!.data.length.toString());
                       var data = snapshot.data!;
                       return Column(
                         children: [
@@ -208,7 +209,7 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                featuredCourses(data, 1),
+                                featuredCourses(data, 4),
                                 featuredCourses(data, 0)
                               ],
                             ),
@@ -221,7 +222,7 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 featuredCourses(data, 2),
-                                featuredCourses(data, 3)
+                                featuredCourses(data, 1)
                               ],
                             ),
                           ),
@@ -281,7 +282,7 @@ class _PaidCourseScreenState extends State<PaidCourseScreen> {
                 ),
               ),
               Text(
-                "5999/-",
+                "${data.data[index].price}/-",
                 style: GoogleFonts.poppins(
                     textStyle: TextStyle(
                         color: kred,

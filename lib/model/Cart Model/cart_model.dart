@@ -12,19 +12,22 @@ class CartModel {
   CartModel({
     required this.err,
     required this.data,
+    required this.message,
   });
 
   bool err;
   List<Datum> data;
+  String? message;
 
   factory CartModel.fromJson(Map<String, dynamic> json) => CartModel(
-        err: json["err"],
-        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
-      );
+      err: json["err"],
+      data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+      message: json["message"]);
 
   Map<String, dynamic> toJson() => {
         "err": err,
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "message": message
       };
 }
 

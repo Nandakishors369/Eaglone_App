@@ -22,7 +22,7 @@ class Search {
     http.Response response;
     response = await http.get(Uri.parse(url), headers: headers);
     log("result awaiting");
-    log(response.body);
+    //log(response.body);
     if (response.statusCode == 200) {
       log("Got Search results");
       SearchModel model = SearchModel.fromJson(jsonDecode(response.body));

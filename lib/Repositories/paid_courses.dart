@@ -19,7 +19,7 @@ class PaidCourses {
     Map<String, String> headers = {"apikey": "paidcourse $api_key"};
     String? query = null;
     final response = await client.get(Uri.parse(url), headers: headers);
-    log(response.body);
+    //log(response.body);
     if (response.statusCode == 200 && query != null) {
       PaidCourseModel courseModel =
           PaidCourseModel.fromJson(jsonDecode(response.body));

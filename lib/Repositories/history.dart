@@ -17,7 +17,7 @@ class HistoryCourse {
     var token = prefs.get('token');
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token.toString());
     String userid = decodedToken['_id'];
-    String url = "$baseUrl/get-orders?userId=$userid";
+    String url = "$baseUrl/get-order/$userid";
     log(token.toString());
     log(userid);
     Map<String, String> headers = {
@@ -28,6 +28,7 @@ class HistoryCourse {
     http.Response response;
     response = await http.get(Uri.parse(url), headers: headers);
     log("Fetching done");
+    log(response.body);
     if (response.statusCode == 200) {
       log("fetched successfully");
       OrderHistory history = OrderHistory.fromJson(jsonDecode(response.body));

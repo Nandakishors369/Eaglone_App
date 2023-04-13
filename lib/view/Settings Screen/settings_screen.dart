@@ -17,6 +17,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -75,7 +76,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
                 child: headingss(heading: "Privacy Policy")),
             kheigh20,
-            headingss(heading: "Share the app"),
+            GestureDetector(
+                onTap: () {
+                  Share.share("https://github.com/Nandakishors369/Eaglone_App",
+                      subject: "Eaglone Github Repository");
+                },
+                child: headingss(heading: "Share the app")),
             kheigh20,
             GestureDetector(
                 onTap: () {

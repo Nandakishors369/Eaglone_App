@@ -131,7 +131,7 @@ class _CartScreenState extends State<CartScreen> {
           ),
           Expanded(
             child: FutureBuilder(
-                future: CartRepository.getCart(),
+                future: CartRepository.getCart(context),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return LoadingCart();
@@ -172,7 +172,7 @@ class _CartScreenState extends State<CartScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: FutureBuilder(
-                future: CartRepository.getCart(),
+                future: CartRepository.getCart(context),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return hell; /* Text(

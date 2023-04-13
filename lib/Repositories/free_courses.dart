@@ -42,7 +42,7 @@ class FreeCourses {
             (route) => false);
         showSnackBar(context, "Please Login Again");
       } else {
-        log("something went wrong while fetching products");
+        log("something went wrong while fetching products ${response.statusCode}");
         errorHandler(statusCode: response.statusCode);
         return null;
       }

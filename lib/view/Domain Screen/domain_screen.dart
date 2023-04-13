@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eaglone/Repositories/enroll.dart';
+import 'package:eaglone/Repositories/free_courses.dart';
 import 'package:eaglone/model/Product%20Model/freecourse_model.dart';
 import 'package:eaglone/Repositories/getdata.dart';
 import 'package:eaglone/view/Domain%20Screen/details_screen.dart';
@@ -117,12 +119,18 @@ class _DomainScreenState extends State<DomainScreen> {
               ],
             ),
             GestureDetector(
-              onTap: () {
+              onTap: () async {
+                /* FreeCoursesEnroll.enrollCourse(
+                    courseId: widget.data.data[widget.index].id); */
+
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => PlaylistScreen(
-                          title: widget.data.data[widget.index].title),
+                        courseId2: widget.data.data[widget.index].courseId,
+                        title: widget.data.data[widget.index].title,
+                        img: widget.data.data[widget.index].image,
+                      ),
                     ));
               },
               child: Container(

@@ -59,7 +59,7 @@ class _YourCoursesState extends State<YourCourses> {
                     return ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: 10,
+                      itemCount: snapshot.data!.data.length,
                       itemBuilder: (context, index) {
                         var data = snapshot.data!;
                         return ListTile(

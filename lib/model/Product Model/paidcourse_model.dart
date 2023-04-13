@@ -49,7 +49,6 @@ class Datum {
     required this.ourPrice,
     required this.category,
     required this.premium,
-    this.rating,
     required this.v,
   });
 
@@ -65,7 +64,6 @@ class Datum {
   int ourPrice;
   String category;
   bool premium;
-  int? rating;
   int v;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -81,7 +79,6 @@ class Datum {
         ourPrice: json["ourPrice"],
         category: json["category"],
         premium: json["premium"],
-        rating: json["rating"],
         v: json["__v"],
       );
 
@@ -98,7 +95,6 @@ class Datum {
         "ourPrice": ourPrice,
         "category": category,
         "premium": premium,
-        "rating": rating,
         "__v": v,
       };
 }

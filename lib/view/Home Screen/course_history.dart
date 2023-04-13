@@ -58,10 +58,10 @@ class _EnrolledCoursesState extends State<EnrolledCourses> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return LoadingGrid();
                   } else if (snapshot.hasData) {
+                    var data = snapshot.data!;
                     return ListView.builder(
-                      itemCount: 10,
+                      itemCount: data.data.length,
                       itemBuilder: (context, index) {
-                        var data = snapshot.data!;
                         return ListTile(
                           leading: CircleAvatar(
                             backgroundColor: kwhite,

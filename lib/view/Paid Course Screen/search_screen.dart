@@ -77,11 +77,7 @@ class SearchPaid extends SearchDelegate {
             );
           } else {
             return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Lottie.asset("assets/errorLottie.json"),
-              ),
-            );
+                child: appHeadings(content: "Search result not found"));
           }
         });
   }

@@ -27,7 +27,7 @@ class AllCourses {
     log("all courses staretedd");
     http.Response response = await http.get(Uri.parse(url), headers: headers);
 
-    log(response.body);
+    //log(response.body);
     if (response.statusCode == 200) {
       log("All course fetched succesfully");
 

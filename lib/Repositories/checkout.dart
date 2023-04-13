@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:eaglone/Repositories/error.dart';
@@ -31,8 +32,10 @@ class Checkout {
       "payment": {"method": "card", "transactionId": "dshjafkhjdfhjkdshjklsdf"},
       "coupon": {"code": "happy", "discount": 100}
     };
+    String bodyString = jsonEncode(body);
     log("started to place order");
-    response = await http.post(Uri.parse(url), body: body, headers: headers);
+    response =
+        await http.post(Uri.parse(url), body: bodyString, headers: headers);
     log(response.body);
     if (response.statusCode == 200) {
       log("Order Placed Successfully");

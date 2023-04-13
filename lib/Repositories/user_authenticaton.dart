@@ -95,7 +95,7 @@ class UserAuth {
     log("login started");
     try {
       response = await http.post(Uri.parse(Url), body: body, headers: headers);
-      log(response.body);
+      //log(response.body);
       var data = jsonDecode(response.body);
       // LoginResponse loginResponse = LoginResponse.fromJson(jsonDecode(response.body));
       if (response.statusCode == 200) {

@@ -72,7 +72,8 @@ class DetailsScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PlaylistScreen(title: "Flutter"),
+                      builder: (context) => PlaylistScreen(
+                          title: "Flutter", courseId2: "", img: ""),
                     ),
                   );
                 },

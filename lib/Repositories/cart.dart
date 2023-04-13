@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:eaglone/Repositories/error.dart';
 import 'package:eaglone/model/Cart%20Model/cart_model.dart';
 import 'package:eaglone/view/Login%20and%20Signup/loginuser.dart';
 import 'package:eaglone/view/api_keys.dart';
@@ -53,12 +54,13 @@ class CartRepository {
     }
   }
 
-  static Future<CartModel?> getCart() async {
+  static Future<CartModel?> getCart(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.get('token');
     Map<String, dynamic> decodedToken = JwtDecoder.decode(token.toString());
     String userid = decodedToken['_id'];
     String url = "$baseUrl/get-cart?userId=$userid";
+    log("token");
     log(token.toString());
     log(userid);
     Map<String, String> headers = {
@@ -69,15 +71,25 @@ class CartRepository {
     http.Response response;
     response = await http.get(Uri.parse(url), headers: headers);
 
+    log(response.body);
     if (response.statusCode == 200) {
       log("fetched cart ");
       CartModel cart = CartModel.fromJson(jsonDecode(response.body));
-      log(response.body);
+      //log(response.body);
       return cart;
+    } else if (response.statusCode >= 401 && response.statusCode <= 403) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.clear();
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginUserScreen(),
+          ),
+          (route) => false);
+      showSnackBar(context, "Please Login Again");
     } else {
-      log("something went wrong while fetching the cart ${response.statusCode}");
-
-      return null;
+      log("something went wrong");
+      errorHandler(statusCode: response.statusCode);
     }
   }
 
