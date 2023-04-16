@@ -8,6 +8,7 @@ import 'package:eaglone/view/Home%20Screen/video_screen.dart';
 import 'package:eaglone/view/Home%20Screen/your_courses.dart';
 import 'package:eaglone/view/const.dart';
 import 'package:eaglone/view/widgets/common_widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -87,6 +88,10 @@ class _PlaylistScreenState extends State<PlaylistScreen> {
       padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: GestureDetector(
         onTap: () async {
+          showDialog(
+            context: context,
+            builder: (context) => const CupertinoActivityIndicator(),
+          );
           log("video started");
           VideoModel? data = await FreeCoursesEnroll.getVideo(
               courseId: courseId, context: context);
